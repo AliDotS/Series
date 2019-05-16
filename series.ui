@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>602</width>
+    <height>423</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableWidget" name="seriesTableWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>441</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Season</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Episode</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Status</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="checkPushButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>70</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Check</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="editPushButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>120</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Edit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addPushButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>170</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Add</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="setPhotoPushButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>220</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Set Photo</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>addPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>addPushButton</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>184</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>516</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
