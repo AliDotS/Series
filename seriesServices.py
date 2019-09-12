@@ -8,6 +8,8 @@ from pymongo import MongoClient
 series = MongoClient().imdb.series
 
 
+movie_exts = r'\.mkv$|\.mp4$|\.avi$|\.flv$|\.mpeg$|\.mpg$'
+
 def getData(name: str):
     if not series.find_one({'name': name}):
         return 0
@@ -117,8 +119,7 @@ def checkOut(name: str):
 
 def getSeries():
     for tvSeries in series.find():
-        episode = int(os.popen(
-            f"find '{tvSeries['directory']}' | grep mkv | grep -Poi \"(?<=e)[0-9][0-9]\" | tail -1").read()) + 1
+        episode = get_last_file(tvSeries['directory'])
 
         season = re.findall("(?<=_)[0-9]+$", tvSeries['imdbUrl'])[0]
 
@@ -130,3 +131,17 @@ def getSeries():
         item.update(tvSeries)
 
         yield item
+
+def get_last_file(path):
+    biggest = 0
+    for _, _, files in os.walk(path):
+        for file in files:
+            if re.search(movie_exts, file, re.IGNORECASE):
+                episode = re.search(r'(?<=[eE])\d{1,2}', file)
+                if episode and int(episode.group()) > biggest:
+                    biggest = int(episode.group())
+    return biggest if biggest > 0 else None
+
+if __name__ == "__main__":
+    # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
+    getSeries()
