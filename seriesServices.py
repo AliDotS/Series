@@ -96,8 +96,7 @@ def checkOut(name: str):
 
     tvSeries = series.find_one({'name': name})
 
-    num = int(
-        os.popen(f"find '{tvSeries['directory']}' | grep mkv | grep -Poi \"(?<=e)[0-9][0-9]\" | tail -1").read()) + 1
+    num = get_last_file(tvSeries['directory'])
 
     episode = '%02i' % num
 
@@ -106,7 +105,7 @@ def checkOut(name: str):
     prog = re.compile(f"http[^\ ]*[sS]{season}[^\ ]*[eE]{episode}[^\ ]*mkv")
 
     for url in tvSeries['urls']:
-        page = requests.get(url).content.decode('utf-8')
+        page = requests.get(url, timeout=20).content.decode('utf-8')
 
         results = prog.findall(page)
 
@@ -144,4 +143,4 @@ def get_last_file(path):
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
-    getSeries()
+    checkOut('bigbang')
