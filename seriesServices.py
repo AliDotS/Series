@@ -105,7 +105,7 @@ def checkOut(name: str):
     prog = re.compile(f"http[^\ ]*[sS]{season}[^\ ]*[eE]{episode}[^\ ]*mkv")
 
     for url in tvSeries['urls']:
-        page = requests.get(url, timeout=20).content.decode('utf-8')
+        page = get_content(url)
 
         results = prog.findall(page)
 
@@ -140,6 +140,16 @@ def get_last_file(path):
                 if episode and int(episode.group()) > biggest:
                     biggest = int(episode.group())
     return biggest if biggest > 0 else None
+
+def get_content(url: str):
+    headers = {
+        'User-Agent' : 'Mozilla/5.0'
+    }
+
+    try:
+        return requests.get(url, headers=headers, timeout=20).content.decode('utf-8')
+    except Exception:
+        return
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
