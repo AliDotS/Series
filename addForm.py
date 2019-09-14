@@ -68,7 +68,7 @@ class Ui_MainWindow(object):
         self.addPushButton.clicked.connect(self.on_add_button)
         self.directoryPushButton.clicked.connect(self.on_directory)
         self.photoPushButton.clicked.connect(self.on_photo)
-        self.urlsTableWidget.itemChanged.connect(self.on_table_clicked)
+        self.urlsTableWidget.itemChanged.connect(self.on_table_item_changed)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.nameLineEdit, self.directoryLineEdit)
         MainWindow.setTabOrder(self.directoryLineEdit,
@@ -91,7 +91,7 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Url"))
         self.addPushButton.setText(_translate("MainWindow", "&Add"))
 
-    def on_table_clicked(self, test):
+    def on_table_item_changed(self, test):
         rowNum = self.urlsTableWidget.rowCount()
         temp_item = self.urlsTableWidget.item(rowNum - 1, 0)
         if not temp_item or not temp_item.text().strip():
