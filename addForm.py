@@ -92,7 +92,11 @@ class Ui_MainWindow(object):
         self.addPushButton.setText(_translate("MainWindow", "&Add"))
 
     def on_table_clicked(self, test):
-        pass
+        rowNum = self.urlsTableWidget.rowCount()
+        temp_item = self.urlsTableWidget.item(rowNum - 1, 0)
+        if not temp_item or not temp_item.text().strip():
+            return
+        self.urlsTableWidget.insertRow(rowNum)
 
     def on_check_box_changed(self):
         self.photoPathLineEdit.setEnabled(self.photoCheckBox.isChecked())
