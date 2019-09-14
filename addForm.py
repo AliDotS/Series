@@ -1,4 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from urllib.parse import urlparse
+
+import seriesServices
+
+def is_url(url):
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc])
+    except ValueError:
+        return False
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -8,7 +18,8 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.nameLabel = QtWidgets.QLabel(self.centralwidget)
         self.nameLabel.setGeometry(QtCore.QRect(20, 60, 65, 21))
-        self.nameLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.nameLabel.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.nameLabel.setObjectName("nameLabel")
         self.directoryLabel = QtWidgets.QLabel(self.centralwidget)
         self.directoryLabel.setGeometry(QtCore.QRect(20, 100, 71, 21))
@@ -52,14 +63,16 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.photoCheckBox.stateChanged['int'].connect(self.on_check_box_changed)
+        self.photoCheckBox.stateChanged['int'].connect(
+            self.on_check_box_changed)
         self.addPushButton.clicked.connect(self.on_add_button)
         self.directoryPushButton.clicked.connect(self.on_directory)
         self.photoPushButton.clicked.connect(self.on_photo)
         self.urlsTableWidget.itemChanged.connect(self.on_table_clicked)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.nameLineEdit, self.directoryLineEdit)
-        MainWindow.setTabOrder(self.directoryLineEdit, self.directoryPushButton)
+        MainWindow.setTabOrder(self.directoryLineEdit,
+                               self.directoryPushButton)
         MainWindow.setTabOrder(self.directoryPushButton, self.photoCheckBox)
         MainWindow.setTabOrder(self.photoCheckBox, self.photoPathLineEdit)
         MainWindow.setTabOrder(self.photoPathLineEdit, self.photoPushButton)
@@ -79,8 +92,7 @@ class Ui_MainWindow(object):
         self.addPushButton.setText(_translate("MainWindow", "&Add"))
 
     def on_table_clicked(self, test):
-        print("testing")
-        print(test)
+        pass
 
     def on_check_box_changed(self):
         self.photoPathLineEdit.setEnabled(self.photoCheckBox.isChecked())
@@ -90,8 +102,10 @@ class Ui_MainWindow(object):
 
     def on_directory(self):
         pass
+
     def on_photo(self):
         pass
+
 
 if __name__ == "__main__":
     import sys
@@ -101,4 +115,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
