@@ -10,6 +10,7 @@ series = MongoClient().imdb.series
 
 movie_exts = r'\.mkv$|\.mp4$|\.avi$|\.flv$|\.mpeg$|\.mpg$'
 
+
 def getData(name: str):
     if not series.find_one({'name': name}):
         return 0
@@ -32,7 +33,7 @@ def getData(name: str):
                 'dates': dates,
                 'names': names,
             }
-        })
+    })
 
     if result.matched_count > 0:
         return 1
@@ -41,6 +42,9 @@ def getData(name: str):
 
 def createSeries(name: str, url: str, directory: str, urls: [str]):
     if series.find_one({'name': name}):
+        return 0
+
+    if not os.path.isdir(directory):
         return 0
 
     result = series.insert_one({
@@ -83,7 +87,7 @@ def setPhoto(name: str, image: str):
             '$set': {
                 'image': image
             }
-        })
+    })
 
     if result.matched_count > 0:
         return 1
@@ -102,7 +106,7 @@ def checkOut(name: str):
 
     season = re.findall("(?<=_)[0-9]+$", tvSeries['imdbUrl'])[0]
 
-    prog = re.compile(f"http[^\ ]*[sS]{season}[^\ ]*[eE]{episode}[^\ ]*mkv")
+    prog = re.compile(fr"http[^\ ]*[sS]{season}[^\ ]*[eE]{episode}[^\ ]*mkv")
 
     for url in tvSeries['urls']:
         page = get_content(url)
@@ -131,6 +135,7 @@ def getSeries():
 
         yield item
 
+
 def get_last_file(path):
     biggest = 0
     for _, _, files in os.walk(path):
@@ -141,15 +146,17 @@ def get_last_file(path):
                     biggest = int(episode.group())
     return biggest if biggest > 0 else None
 
+
 def get_content(url: str):
     headers = {
-        'User-Agent' : 'Mozilla/5.0'
+        'User-Agent': 'Mozilla/5.0'
     }
 
     try:
         return requests.get(url, headers=headers, timeout=20).content.decode('utf-8')
     except Exception:
         return
+
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
