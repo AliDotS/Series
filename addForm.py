@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from urllib.parse import urlparse
+from os.path import isdir
 
 import seriesServices
 
@@ -102,14 +103,21 @@ class Ui_MainWindow(object):
         self.photoPathLineEdit.setEnabled(self.photoCheckBox.isChecked())
 
     def on_add_button(self):
-        pass
+        self.validate_form()
 
     def on_directory(self):
-        pass
+        folder = QtWidgets.QFileDialog.getExistingDirectory()
+        self.directoryLineEdit.setText(folder)
 
     def on_photo(self):
         pass
 
+    def validate_form(self):
+        directory = self.directoryLineEdit.text()
+        error = ""
+        if not isdir(directory):
+            error += "unvalid directory"
+        print(error)
 
 if __name__ == "__main__":
     import sys
