@@ -101,16 +101,20 @@ class Ui_MainWindow(object):
 
     def on_check_box_changed(self):
         self.photoPathLineEdit.setEnabled(self.photoCheckBox.isChecked())
+        self.photoPushButton.setEnabled(self.photoCheckBox.isChecked())
 
     def on_add_button(self):
         self.validate_form()
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
-        self.directoryLineEdit.setText(folder)
+        if folder != '':
+            self.directoryLineEdit.setText(folder)
 
     def on_photo(self):
-        pass
+        photo = QtWidgets.QFileDialog.getOpenFileName(filter="Image files (*.jpg *.png)")
+        if photo[0] != 0:
+            self.photoPathLineEdit.setText(photo[0])
 
     def validate_form(self):
         directory = self.directoryLineEdit.text()
