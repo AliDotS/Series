@@ -2,6 +2,7 @@ import requests
 from lxml import html
 import os
 import re
+from lxml.html import fromstring
 
 from pymongo import MongoClient
 
@@ -156,6 +157,13 @@ def get_content(url: str):
         return requests.get(url, headers=headers, timeout=20).content.decode('utf-8')
     except Exception:
         return
+
+#TODO: url and test not complete
+def search(name: str):
+    baseUrl = ''
+    tree = fromstring(get_content)
+    
+
 
 
 if __name__ == "__main__":
