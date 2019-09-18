@@ -3,7 +3,8 @@ from lxml import html
 import os
 import re
 from lxml.html import fromstring
-
+from copy import deepcopy
+from pprint import pprint
 from pymongo import MongoClient
 
 series = MongoClient().imdb.series
@@ -158,14 +159,35 @@ def get_content(url: str):
     except Exception:
         return
 
-#TODO: url and test not complete
-def search(name: str):
-    baseUrl = ''
-    tree = fromstring(get_content)
-    
+
+class imdb_search_result():
+    img = ''
+    name = ''
+    link = ''
+
+# TODO: url and test not complete
+
+
+def search(name):
+    if not name or name == "":
+        return
+    site = 'https://www.imdb.com'
+    baseUrl = 'https://www.imdb.com/find?s=tt&ref_=fn_al_tt_mr&q='
+    tree = fromstring(get_content(baseUrl + name))
+    results = tree.xpath('//tr[contains(@class, "findResult")]')
+    final_results = []
+    details = imdb_search_result()
+    for result in results:
+        details.img = result.xpath('.//img/@src')[0]
+        details.name = result.xpath('.//td[@class = "result_text"]/a/text()')[0]
+        details.name += result.xpath('.//td[@class = "result_text"]/text()')[1]
+        details.link = result.xpath('.//td[@class = "result_text"]/a/@href')[0]
+        details.link = site + details.link
+        final_results.append(deepcopy(details))
+    return final_results if final_results else None
 
 
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
-    checkOut('bigbang')
+    pprint(search('robocop')[0].__dict__)
