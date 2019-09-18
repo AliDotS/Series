@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from urllib.parse import urlparse
-from os.path import isdir
+from os.path import isdir, isfile
 
 import seriesServices
+
 
 def is_url(url):
     try:
@@ -11,7 +12,9 @@ def is_url(url):
     except ValueError:
         return False
 
+
 class Ui_MainWindow(object):
+    imdb_url = ''
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(668, 467)
@@ -112,16 +115,31 @@ class Ui_MainWindow(object):
             self.directoryLineEdit.setText(folder)
 
     def on_photo(self):
-        photo = QtWidgets.QFileDialog.getOpenFileName(filter="Image files (*.jpg *.png)")
+        photo = QtWidgets.QFileDialog.getOpenFileName(
+            filter="Image files (*.jpg *.png)")
         if photo[0] != 0:
             self.photoPathLineEdit.setText(photo[0])
 
     def validate_form(self):
         directory = self.directoryLineEdit.text()
+        photo = self.photoPathLineEdit.text()
+        name = self.nameLineEdit.text()
         error = ""
         if not isdir(directory):
-            error += "unvalid directory"
-        print(error)
+            error += "Unvalid directory\n"
+        if self.photoCheckBox.isChecked() and not isfile(photo):
+            error += "Unvalid photo\n"
+        if not name or name == "":
+            error += "Unvalid name"
+        if error:
+            print(error)
+            return
+
+        urls=[]
+        for row in range(self.urlsTableWidget.rowCount() - 1):
+            urls.append(self.urlsTableWidget.item(row, 0).text())
+        print(urls)
+        # seriesServices.createSeries(name, '', )
 
 if __name__ == "__main__":
     import sys
