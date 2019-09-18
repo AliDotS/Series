@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import seriesServices
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -35,7 +36,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         MainWindow.returnPressed.connect(self.search_name)
         self.movieNameLineEdit.returnPressed.connect(self.search_name)
-        self.searchPushButton.clicked.connect(self.searchPushButton.update)
+        self.searchPushButton.clicked.connect(self.search_name)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -47,7 +48,7 @@ class Ui_MainWindow(object):
         self.nameLabel_2.setText(_translate("MainWindow", "TextLabel"))
 
     def search_name(self):
-        pass
+        results = seriesServices.search(self.movieNameLineEdit.text())
 
 
 if __name__ == "__main__":
