@@ -15,6 +15,7 @@ def is_url(url):
 
 class Ui_MainWindow(object):
     imdb_url = ''
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(668, 467)
@@ -124,6 +125,10 @@ class Ui_MainWindow(object):
         directory = self.directoryLineEdit.text()
         photo = self.photoPathLineEdit.text()
         name = self.nameLineEdit.text()
+        urls = []
+        for row in range(self.urlsTableWidget.rowCount() - 1):
+            urls.append(self.urlsTableWidget.item(row, 0).text())
+
         error = ""
         if not isdir(directory):
             error += "Unvalid directory\n"
@@ -131,15 +136,22 @@ class Ui_MainWindow(object):
             error += "Unvalid photo\n"
         if not name or name == "":
             error += "Unvalid name"
+        for index, url in enumerate(urls):
+            if not is_url(url):
+                error += f"Unvalid url {index + 1}"
         if error:
             print(error)
             return
 
-        urls=[]
-        for row in range(self.urlsTableWidget.rowCount() - 1):
-            urls.append(self.urlsTableWidget.item(row, 0).text())
         print(urls)
         # seriesServices.createSeries(name, '', )
+
+    def validate_urls(self):
+        for url in range(self.urlsTableWidget.rowCount() - 1):
+            if not is_url(url):
+                return False
+        return True
+
 
 if __name__ == "__main__":
     import sys
