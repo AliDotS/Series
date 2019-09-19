@@ -163,7 +163,7 @@ def get_content(url: str):
 class imdb_search_result():
     img = ''
     name = ''
-    link = ''
+    imdb_link = ''
 
 # TODO: url and test not complete
 
@@ -181,8 +181,8 @@ def search(name):
         details.img = result.xpath('.//img/@src')[0]
         details.name = result.xpath('.//td[@class = "result_text"]/a/text()')[0]
         details.name += result.xpath('.//td[@class = "result_text"]/text()')[1]
-        details.link = result.xpath('.//td[@class = "result_text"]/a/@href')[0]
-        details.link = site + details.link
+        details.imdb_link = result.xpath('.//td[@class = "result_text"]/a/@href')[0]
+        details.imdb_link = site + details.imdb_link
         final_results.append(deepcopy(details))
     return final_results if final_results else None
 
