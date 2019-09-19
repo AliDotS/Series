@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
+    <width>633</width>
     <height>351</height>
    </rect>
   </property>
@@ -88,6 +88,19 @@
       <string>TextLabel</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QScrollBar" name="verticalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>0</y>
+      <width>16</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
