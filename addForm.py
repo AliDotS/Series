@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
         self.directoryPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.directoryPushButton.setGeometry(QtCore.QRect(620, 90, 31, 29))
         self.directoryPushButton.setObjectName("directoryPushButton")
-        self.imdbUrlLineEdit= QtWidgets.QLineEdit(self.centralwidget)
+        self.imdbUrlLineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.imdbUrlLineEdit.setGeometry(QtCore.QRect(100, 180, 501, 31))
         self.imdbUrlLineEdit.setObjectName("imdbUrlLineEdit")
         self.imdbLabel = QtWidgets.QLabel(self.centralwidget)
@@ -132,6 +132,7 @@ class Ui_MainWindow(object):
         directory = self.directoryLineEdit.text()
         photo = self.photoPathLineEdit.text()
         name = self.nameLineEdit.text()
+        imdb_url = self.imdbUrlLineEdit.text()
         urls = []
         for row in range(self.urlsTableWidget.rowCount() - 1):
             urls.append(self.urlsTableWidget.item(row, 0).text())
@@ -142,7 +143,9 @@ class Ui_MainWindow(object):
         if self.photoCheckBox.isChecked() and not isfile(photo):
             error += "Unvalid photo\n"
         if not name or name == "":
-            error += "Unvalid name"
+            error += "Unvalid name\n"
+        if not is_url(imdb_url):
+            error += "Unvalid imdb url"
         for index, url in enumerate(urls):
             if not is_url(url):
                 error += f"Unvalid url {index + 1}"
