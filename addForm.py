@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from urllib.parse import urlparse
 from os.path import isdir, isfile
+from re import search as reSearch
 
 import seriesServices
 
@@ -144,7 +145,8 @@ class Ui_MainWindow(object):
             error += "Unvalid photo\n"
         if not name or name == "":
             error += "Unvalid name\n"
-        if not is_url(imdb_url):
+        if not is_url(imdb_url) or\
+            not reSearch("^(http[s]?://)?(www.)?imdb.com", imdb_url):
             error += "Unvalid imdb url"
         for index, url in enumerate(urls):
             if not is_url(url):
