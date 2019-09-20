@@ -1,0 +1,23 @@
+def downloadfile(self, link, retry=0):
+        req = Request(link, headers={'User-Agent': 'Mozilla/5.0'})
+        try:
+            request = urlopen(req, timeout=10)
+
+            with NamedTemporaryFile() as f:
+                f.write(request.read())
+                self.imageLabel.setPixmap(QtGui.QPixmap(f.name))
+        except:
+            if retry > 15:
+                return 1
+            return self.downloadfile(link, retry + 1)
+
+        return 0
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
