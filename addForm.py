@@ -148,10 +148,10 @@ class Ui_MainWindow(object):
             error += "Unvalid name\n"
         if not is_url(imdb_url) or\
                 not reSearch("^(http[s]?://)?(www.)?imdb.com", imdb_url):
-            error += "Unvalid imdb url"
+            error += "Unvalid imdb url\n"
         for index, url in enumerate(urls):
             if not is_url(url):
-                error += f"Unvalid url {index + 1}"
+                error += f"Unvalid url {index + 1}\n"
         if error:
             print(error)
             return False
