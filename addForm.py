@@ -116,7 +116,8 @@ class Ui_MainWindow(object):
         self.photoPushButton.setEnabled(self.photoCheckBox.isChecked())
 
     def on_add_button(self):
-        self.validate_form()
+        if self.validate_form():
+            self.create_series()
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
@@ -161,6 +162,22 @@ class Ui_MainWindow(object):
             if not is_url(url):
                 return False
         return True
+
+    def create_series(self):
+        name = self.nameLineEdit.text()
+        directory = self.directoryLineEdit.text()
+        imdb_url = self.imdbUrlLineEdit.text()
+        photo = self.photoPathLineEdit.text()
+        urls = []
+        for row in range(self.urlsTableWidget.rowCount() - 1):
+            urls.append(self.urlsTableWidget.item(row, 0).text())
+        print(
+            name,
+            directory,
+            imdb_url,
+            photo,
+            urls
+        )
 
 
 if __name__ == "__main__":
