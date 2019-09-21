@@ -146,17 +146,15 @@ class Ui_MainWindow(object):
         if not name or name == "":
             error += "Unvalid name\n"
         if not is_url(imdb_url) or\
-            not reSearch("^(http[s]?://)?(www.)?imdb.com", imdb_url):
+                not reSearch("^(http[s]?://)?(www.)?imdb.com", imdb_url):
             error += "Unvalid imdb url"
         for index, url in enumerate(urls):
             if not is_url(url):
                 error += f"Unvalid url {index + 1}"
         if error:
             print(error)
-            return
-
-        print(urls)
-        # seriesServices.createSeries(name, '', )
+            return False
+        return True
 
     def validate_urls(self):
         for url in range(self.urlsTableWidget.rowCount() - 1):
