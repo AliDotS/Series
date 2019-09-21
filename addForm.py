@@ -171,13 +171,8 @@ class Ui_MainWindow(object):
         urls = []
         for row in range(self.urlsTableWidget.rowCount() - 1):
             urls.append(self.urlsTableWidget.item(row, 0).text())
-        print(
-            name,
-            directory,
-            imdb_url,
-            photo,
-            urls
-        )
+
+        seriesServices.createSeries(name, imdb_url, directory, urls)
 
 
 if __name__ == "__main__":
