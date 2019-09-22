@@ -5,78 +5,64 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
+    rownum = 0
+
     def setupUi(self, MainWindow):
-        self.imgHeight = 70
-        self.nameHeight = 90
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(601, 351)
-        MainWindow.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks |
-                                  QtWidgets.QMainWindow.AllowTabbedDocks | QtWidgets.QMainWindow.AnimatedDocks)
-        self.centralwidget = QtWidgets.QScrollArea(MainWindow)
+        MainWindow.resize(720, 361)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.centralwidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.centralwidget.setWidgetResizable(True)
-        self.movieNameLineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.movieNameLineEdit.setGeometry(QtCore.QRect(80, 20, 411, 27))
-        self.movieNameLineEdit.setObjectName("movieNameLineEdit")
-        self.nameLabel = QtWidgets.QLabel(self.centralwidget)
-        self.nameLabel.setGeometry(QtCore.QRect(10, 20, 61, 21))
-        self.nameLabel.setObjectName("nameLabel")
-        self.searchPushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.searchPushButton.setGeometry(QtCore.QRect(499, 20, 91, 27))
-        self.searchPushButton.setObjectName("searchPushButton")
-        self.imageLabel = QtWidgets.QLabel(self.centralwidget)
-        self.imageLabel.setGeometry(QtCore.QRect(80, 70, 61, 61))
-        self.imageLabel.setObjectName("imageLabel")
-        self.nameLabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.nameLabel_2.setGeometry(QtCore.QRect(160, 90, 311, 19))
-        self.nameLabel_2.setObjectName("nameLabel_2")
-        # self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        # self.scrollArea.setWidgetResizable(True)
-        # self.scrollArea.resize(601, 351)
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.nameLineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.nameLineEdit.setObjectName("nameLineEdit")
+        self.gridLayout.addWidget(self.nameLineEdit, 0, 1, 1, 1)
+        self.searchPpushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.searchPpushButton.setObjectName("searchPpushButton")
+        self.gridLayout.addWidget(self.searchPpushButton, 0, 2, 1, 1)
+        self.groupBox = QtWidgets.QGroupBox()
+        self.groupLayout = QtWidgets.QFormLayout()
+        self.groupBox.setLayout(self.groupLayout)
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollArea.setWidget(self.groupBox)
+        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.movieNameLineEdit.returnPressed.connect(self.search_name)
-        self.searchPushButton.clicked.connect(self.search_name)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.nameLabel.setText(_translate("MainWindow", "Name:"))
-        self.searchPushButton.setText(_translate("MainWindow", "&Search"))
-        self.imageLabel.setText(_translate("MainWindow", "TextLabel"))
-        self.nameLabel_2.setText(_translate("MainWindow", "TextLabel"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Search"))
+        self.label.setText(_translate("MainWindow", "name:"))
+        self.searchPpushButton.setText(_translate("MainWindow", "&Search"))
+        self.nameLineEdit.returnPressed.connect(self.search_name)
 
     def search_name(self):
-        self.imgHeight += 65
-        tempw = QtWidgets.QLabel(self.centralwidget)
-        tempw.setGeometry(80, self.imgHeight, 61, 61)
-        tempw.setText('tempw')
-        tempw.show()
+        image = QtWidgets.QLabel()
+        image.setFixedHeight(100)
+        self.downloadfile(image, self.nameLineEdit.text())
 
-        self.nameHeight += 65
-        tempw2 = QtWidgets.QLabel(self.centralwidget)
-        tempw2.setGeometry(160, self.nameHeight, 311, 19)
-        tempw2.setText('tempw2')
-        tempw2.show()
-
-    def downloadfile(self, link, retry=0):
+    def downloadfile(self, label, link, retry=0):
         req = Request(link, headers={'User-Agent': 'Mozilla/5.0'})
         try:
             request = urlopen(req, timeout=10)
 
             with NamedTemporaryFile() as f:
                 f.write(request.read())
-                self.imageLabel.setPixmap(QtGui.QPixmap(f.name))
+                label.setPixmap(QtGui.QPixmap(f.name))
         except:
             if retry > 15:
                 return 1
-            return self.downloadfile(link, retry + 1)
+            return self.downloadfile(label, link, retry + 1)
 
         return 0
 
