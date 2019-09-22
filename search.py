@@ -3,6 +3,8 @@ from tempfile import NamedTemporaryFile
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import seriesServices
+
 
 class Ui_MainWindow(object):
     rownum = 0
@@ -47,9 +49,22 @@ class Ui_MainWindow(object):
         self.nameLineEdit.returnPressed.connect(self.search_name)
 
     def search_name(self):
-        image = QtWidgets.QLabel()
-        image.setFixedHeight(100)
-        self.downloadfile(image, self.nameLineEdit.text())
+        print(f'getting {self.nameLineEdit.text()}')
+        results = seriesServices.search(self.nameLineEdit.text())
+        print(results)
+        for result in results:
+            image = QtWidgets.QLabel()
+            image.setFixedHeight(100)
+            self.downloadfile(image, result.img)
+            name = QtWidgets.QLabel(result.name)
+            self.groupLayout.addRow(image, name)
+            QtWidgets.QApplication.processEvents()
+
+        # image = QtWidgets.QLabel()
+        # image.setFixedHeight(100)
+        # self.downloadfile(image, results[0].img)
+        # name = QtWidgets.QLabel(results[0].name)
+        # self.groupLayout.addRow(image, name)
 
     def downloadfile(self, label, link, retry=0):
         req = Request(link, headers={'User-Agent': 'Mozilla/5.0'})
@@ -58,6 +73,7 @@ class Ui_MainWindow(object):
 
             with NamedTemporaryFile() as f:
                 f.write(request.read())
+                f.flush()
                 label.setPixmap(QtGui.QPixmap(f.name))
         except:
             if retry > 15:
