@@ -54,17 +54,11 @@ class Ui_MainWindow(object):
         print(results)
         for result in results:
             image = QtWidgets.QLabel()
-            image.setFixedHeight(100)
+            image.setFixedHeight(120)
             self.downloadfile(image, result.img)
             name = QtWidgets.QLabel(result.name)
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
-
-        # image = QtWidgets.QLabel()
-        # image.setFixedHeight(100)
-        # self.downloadfile(image, results[0].img)
-        # name = QtWidgets.QLabel(results[0].name)
-        # self.groupLayout.addRow(image, name)
 
     def downloadfile(self, label, link, retry=0):
         req = Request(link, headers={'User-Agent': 'Mozilla/5.0'})
