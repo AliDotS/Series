@@ -172,9 +172,10 @@ def search(name):
     if not name or name == "":
         return
     site = 'https://www.imdb.com'
-    baseUrl = 'https://www.imdb.com/find?s=tt&ref_=fn_al_tt_mr&q='
+    baseUrl = 'https://www.imdb.com/find?s=all&ref_=fn_al_tt_mr&q='
     tree = fromstring(get_content(baseUrl + name))
-    results = tree.xpath('//tr[contains(@class, "findResult")]')
+    # results = tree.xpath('//tr[contains(@class, "findResult")]')
+    results = tree.xpath('//*[@id="main"]/div/div[2]/table//tr')
     final_results = []
     details = imdb_search_result()
     for result in results:
