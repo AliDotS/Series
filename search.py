@@ -6,6 +6,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import seriesServices
 
 
+class myLabel(QtWidgets.QLabel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setMouseTracking(True)
+
+    def enterEvent(self, QEvent):
+        self.setStyleSheet("background-color : #fff")
+
+    def leaveEvent(self, QEvent):
+        self.setStyleSheet("background-color : transparent")
+
+
 class Ui_MainWindow(object):
     rownum = 0
 
@@ -57,7 +69,8 @@ class Ui_MainWindow(object):
             image = QtWidgets.QLabel()
             image.setScaledContents(True)
             self.downloadfile(image, result.img)
-            name = QtWidgets.QLabel(result.name)
+            # name = QtWidgets.QLabel(result.name)
+            name = myLabel(result.name)
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
 
@@ -80,6 +93,9 @@ class Ui_MainWindow(object):
     def clear_results(self):
         for index in reversed(range(self.groupLayout.count())):
             self.groupLayout.itemAt(index).widget().setParent(None)
+
+    def on_hover(self, e):
+        pass
 
 
 if __name__ == "__main__":
