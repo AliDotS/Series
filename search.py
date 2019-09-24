@@ -10,6 +10,7 @@ class myLabel(QtWidgets.QLabel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setMouseTracking(True)
+        self.mousePressEvent = self.on_clicked
 
     def enterEvent(self, QEvent):
         self.setStyleSheet("background-color : #fff")
@@ -17,10 +18,14 @@ class myLabel(QtWidgets.QLabel):
     def leaveEvent(self, QEvent):
         self.setStyleSheet("background-color : transparent")
 
+    def on_clicked(self, event):
+        self.parent().imdb_link = self.imdb_link
+        # self.parent.imdb_link = self.imdb_link
+        print(self.parent().imdb_link)
 
 class Ui_MainWindow(object):
     rownum = 0
-
+    imdb_link = ''
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
@@ -69,8 +74,9 @@ class Ui_MainWindow(object):
             image = QtWidgets.QLabel()
             image.setScaledContents(True)
             self.downloadfile(image, result.img)
-            # name = QtWidgets.QLabel(result.name)
             name = myLabel(result.name)
+            name.imdb_link = result.imdb_link
+            # name.mousePressEvent = self.on_label_click
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
 
@@ -94,8 +100,8 @@ class Ui_MainWindow(object):
         for index in reversed(range(self.groupLayout.count())):
             self.groupLayout.itemAt(index).widget().setParent(None)
 
-    def on_hover(self, e):
-        pass
+    def on_label_click(self, event):
+        print(event)
 
 
 if __name__ == "__main__":
