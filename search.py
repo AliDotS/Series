@@ -45,6 +45,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Search"))
         self.label.setText(_translate("MainWindow", "name:"))
+        # self.groupLayout.setVerticalSpacing(1)
         self.searchPpushButton.setText(_translate("MainWindow", "&Search"))
         self.nameLineEdit.returnPressed.connect(self.search_name)
 
@@ -54,7 +55,8 @@ class Ui_MainWindow(object):
         print(results)
         for result in results:
             image = QtWidgets.QLabel()
-            image.setFixedHeight(120)
+            # image.setFixedHeight(70)
+            image.setScaledContents(True)
             self.downloadfile(image, result.img)
             name = QtWidgets.QLabel(result.name)
             self.groupLayout.addRow(image, name)
