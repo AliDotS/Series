@@ -21,10 +21,13 @@ class myLabel(QtWidgets.QLabel):
     def on_clicked(self, event):
         self.parent().imdb_link = self.imdb_link
         print(self.parent().imdb_link)
+        self.parent().on_close()
+
 
 class Ui_MainWindow(object):
     rownum = 0
     imdb_link = ''
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
@@ -42,6 +45,7 @@ class Ui_MainWindow(object):
         self.searchPpushButton.setObjectName("searchPpushButton")
         self.gridLayout.addWidget(self.searchPpushButton, 0, 2, 1, 1)
         self.groupBox = QtWidgets.QGroupBox()
+        self.groupBox.on_close = self.on_close
         self.groupLayout = QtWidgets.QFormLayout()
         self.groupBox.setLayout(self.groupLayout)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
@@ -97,6 +101,10 @@ class Ui_MainWindow(object):
     def clear_results(self):
         for index in reversed(range(self.groupLayout.count())):
             self.groupLayout.itemAt(index).widget().setParent(None)
+
+    def on_close(self):
+        self.centralwidget.parent().close()
+
 
 if __name__ == "__main__":
     import sys
