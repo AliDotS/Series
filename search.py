@@ -20,7 +20,6 @@ class myLabel(QtWidgets.QLabel):
 
     def on_clicked(self, event):
         self.parent().imdb_link = self.imdb_link
-        # self.parent.imdb_link = self.imdb_link
         print(self.parent().imdb_link)
 
 class Ui_MainWindow(object):
@@ -76,7 +75,6 @@ class Ui_MainWindow(object):
             self.downloadfile(image, result.img)
             name = myLabel(result.name)
             name.imdb_link = result.imdb_link
-            # name.mousePressEvent = self.on_label_click
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
 
@@ -99,10 +97,6 @@ class Ui_MainWindow(object):
     def clear_results(self):
         for index in reversed(range(self.groupLayout.count())):
             self.groupLayout.itemAt(index).widget().setParent(None)
-
-    def on_label_click(self, event):
-        print(event)
-
 
 if __name__ == "__main__":
     import sys
