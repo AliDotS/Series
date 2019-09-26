@@ -10,6 +10,7 @@ class myLabel(QtWidgets.QLabel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setMouseTracking(True)
+        self.set_imdb = lambda self, x: x + 'hello'
         self.mousePressEvent = self.on_clicked
 
     def enterEvent(self, QEvent):
@@ -21,13 +22,14 @@ class myLabel(QtWidgets.QLabel):
     def on_clicked(self, event):
         self.parent().imdb_link = self.imdb_link
         print(self.parent().imdb_link)
+        self.set_imdb(self.imdb_link)
         self.parent().on_close()
 
 
 class Ui_MainWindow(object):
     rownum = 0
     imdb_link = ''
-
+    set_imdb = None
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
@@ -79,6 +81,7 @@ class Ui_MainWindow(object):
             self.downloadfile(image, result.img)
             name = myLabel(result.name)
             name.imdb_link = result.imdb_link
+            name.set_imdb = self.set_imdb
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
 
