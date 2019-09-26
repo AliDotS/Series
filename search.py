@@ -99,6 +99,8 @@ class Ui_MainWindow(object):
         return 0
 
     def clear_results(self):
+        if self.groupLayout.count() == 0:
+            return
         for index in reversed(range(self.groupLayout.count())):
             self.groupLayout.itemAt(index).widget().setParent(None)
 
