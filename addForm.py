@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 from os.path import isdir, isfile
 from re import search as reSearch
 
+from search import Ui_MainWindow as searchUI
 import seriesServices
 
 
@@ -82,6 +83,7 @@ class Ui_MainWindow(object):
         self.directoryPushButton.clicked.connect(self.on_directory)
         self.photoPushButton.clicked.connect(self.on_photo)
         self.urlsTableWidget.itemChanged.connect(self.on_table_item_changed)
+        self.searchPushButton.clicked.connect(self.on_search)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.nameLineEdit, self.directoryLineEdit)
@@ -132,11 +134,17 @@ class Ui_MainWindow(object):
         if photo[0] != 0:
             self.photoPathLineEdit.setText(photo[0])
 
+    def on_search(self):
+        self.sMain = QtWidgets.QMainWindow()
+        self.sUI = searchUI()
+        self.sUI.setupUi(self.sMain)
+        self.sMain.show()
+
     def validate_form(self):
         directory = self.directoryLineEdit.text()
         photo = self.photoPathLineEdit.text()
         name = self.nameLineEdit.text()
-        imdb_url = ''
+        imdb_url = self.imdbLineEdit.text()
         urls = []
         for row in range(self.urlsTableWidget.rowCount() - 1):
             urls.append(self.urlsTableWidget.item(row, 0).text())
