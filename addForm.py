@@ -138,7 +138,11 @@ class Ui_MainWindow(object):
         self.sMain = QtWidgets.QMainWindow()
         self.sUI = searchUI()
         self.sUI.setupUi(self.sMain)
+        self.sUI.set_imdb = self.set_imdb_url
         self.sMain.show()
+
+    def set_imdb_url(self, url: str):
+        self.imdbLineEdit.setText(url)
 
     def validate_form(self):
         directory = self.directoryLineEdit.text()
