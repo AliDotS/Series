@@ -137,6 +137,7 @@ class Ui_MainWindow(object):
     def on_search(self):
         self.sMain = QtWidgets.QMainWindow()
         self.sUI = searchUI()
+        self.sUI.perName = self.nameLineEdit.text()
         self.sUI.setupUi(self.sMain)
         self.sUI.set_imdb = self.set_imdb_url
         self.sMain.show()
