@@ -43,9 +43,9 @@ class Ui_MainWindow(object):
         self.nameLineEdit.setObjectName("nameLineEdit")
         self.nameLineEdit.setText(self.perName)
         self.gridLayout.addWidget(self.nameLineEdit, 0, 1, 1, 1)
-        self.searchPpushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.searchPpushButton.setObjectName("searchPpushButton")
-        self.gridLayout.addWidget(self.searchPpushButton, 0, 2, 1, 1)
+        self.searchPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.searchPushButton.setObjectName("searchPpushButton")
+        self.gridLayout.addWidget(self.searchPushButton, 0, 2, 1, 1)
         self.groupBox = QtWidgets.QGroupBox()
         self.groupBox.on_close = self.on_close
         self.groupLayout = QtWidgets.QFormLayout()
@@ -67,8 +67,9 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Search"))
         self.label.setText(_translate("MainWindow", "name:"))
-        self.searchPpushButton.setText(_translate("MainWindow", "&Search"))
+        self.searchPushButton.setText(_translate("MainWindow", "&Search"))
         self.nameLineEdit.returnPressed.connect(self.search_name)
+        self.searchPushButton.clicked.connect(self.search_name)
 
     def search_name(self):
         self.clear_results()
