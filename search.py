@@ -10,7 +10,6 @@ class myLabel(QtWidgets.QLabel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setMouseTracking(True)
-        self.set_imdb = lambda self, x: x + 'hello'
         self.mousePressEvent = self.on_clicked
 
     def enterEvent(self, QEvent):
@@ -29,7 +28,6 @@ class myLabel(QtWidgets.QLabel):
 class Ui_MainWindow(object):
     rownum = 0
     imdb_link = ''
-    set_imdb = None
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
