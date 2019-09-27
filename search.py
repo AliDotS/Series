@@ -28,6 +28,7 @@ class myLabel(QtWidgets.QLabel):
 class Ui_MainWindow(object):
     rownum = 0
     imdb_link = ''
+    perName = ''
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
@@ -40,6 +41,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.nameLineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.nameLineEdit.setObjectName("nameLineEdit")
+        self.nameLineEdit.setText(self.perName)
         self.gridLayout.addWidget(self.nameLineEdit, 0, 1, 1, 1)
         self.searchPpushButton = QtWidgets.QPushButton(self.centralwidget)
         self.searchPpushButton.setObjectName("searchPpushButton")
