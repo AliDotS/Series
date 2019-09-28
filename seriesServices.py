@@ -53,7 +53,7 @@ def createSeries(name: str, url: str, directory: str, urls: [str], photo = ''):
         'name': name,
         'imdbUrl': url,
         'directory': directory,
-        'photo' : photo
+        'photo' : photo,
         'urls': urls
     })
 
