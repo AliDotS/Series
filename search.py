@@ -29,6 +29,7 @@ class Ui_MainWindow(object):
     rownum = 0
     imdb_link = ''
     perName = ''
+    set_imdb = None
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
@@ -72,6 +73,7 @@ class Ui_MainWindow(object):
         self.searchPushButton.clicked.connect(self.search_name)
 
     def search_name(self):
+        self.searchPushButton.setEnabled(False)
         self.clear_results()
         print(f'getting {self.nameLineEdit.text()}')
         results = seriesServices.search(self.nameLineEdit.text())
@@ -85,6 +87,7 @@ class Ui_MainWindow(object):
             name.set_imdb = self.set_imdb
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
+        self.searchPushButton.setEnabled(True)
 
     def downloadfile(self, label, link, retry=0):
         req = Request(link, headers={'User-Agent': 'Mozilla/5.0'})
