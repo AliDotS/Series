@@ -42,7 +42,7 @@ def getData(name: str):
     return 0
 
 
-def createSeries(name: str, url: str, directory: str, urls: [str]):
+def createSeries(name: str, url: str, directory: str, urls: [str], photo = ''):
     if series.find_one({'name': name}):
         return 0
 
@@ -53,6 +53,7 @@ def createSeries(name: str, url: str, directory: str, urls: [str]):
         'name': name,
         'imdbUrl': url,
         'directory': directory,
+        'photo' : photo
         'urls': urls
     })
 
