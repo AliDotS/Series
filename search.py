@@ -11,6 +11,7 @@ class myLabel(QtWidgets.QLabel):
         super().__init__(*args, **kwargs)
         self.setMouseTracking(True)
         self.mousePressEvent = self.on_clicked
+        self.set_imdb = lambda self, x : x+'hello'
 
     def enterEvent(self, QEvent):
         self.setStyleSheet("background-color : #fff")
