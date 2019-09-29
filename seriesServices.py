@@ -105,6 +105,9 @@ def checkOut(name: str):
 
     num = get_last_file(tvSeries['directory'])
 
+    if num is None:
+        return
+
     episode = '%02i' % num
 
     season = re.findall("(?<=_)[0-9]+$", tvSeries['imdbUrl'])[0]
