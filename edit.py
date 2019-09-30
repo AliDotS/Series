@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Edit"))
         self.nameLabel.setText(_translate("MainWindow", "Name:"))
         self.directoryLabel.setText(_translate("MainWindow", "Direcotory:"))
         self.imdbLabel.setText(_translate("MainWindow", "Imdb Url:"))
@@ -73,6 +73,13 @@ class Ui_MainWindow(object):
         self.directoryPushButton.setText(_translate("MainWindow", "..."))
         self.imdbPushButton.setText(_translate("MainWindow", "..."))
         self.photoPushButton.setText(_translate("MainWindow", "..."))
+
+        self.directoryPushButton.clicked.connect(self.on_directory)
+
+    def on_directory(self):
+        folder = QtWidgets.QFileDialog.getExistingDirectory()
+        if folder != '':
+            self.directoryLineEdit.setText(folder)
 
 
 if __name__ == "__main__":
