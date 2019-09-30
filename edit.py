@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
         self.urlTableWidget.setGeometry(QtCore.QRect(40, 200, 641, 192))
         self.urlTableWidget.setObjectName("urlTableWidget")
         self.urlTableWidget.setColumnCount(1)
-        self.urlTableWidget.setRowCount(0)
+        self.urlTableWidget.setRowCount(1)
         item = QtWidgets.QTableWidgetItem()
         self.urlTableWidget.setHorizontalHeaderItem(0, item)
         self.urlTableWidget.horizontalHeader().setStretchLastSection(True)
@@ -78,6 +78,7 @@ class Ui_MainWindow(object):
         self.directoryPushButton.clicked.connect(self.on_directory)
         self.photoPushButton.clicked.connect(self.on_photo)
         self.photoCheckBox.stateChanged['int'].connect(self.on_check_box_changed)
+        self.urlTableWidget.itemChanged.connect(self.on_table_item_changed)
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
@@ -93,6 +94,13 @@ class Ui_MainWindow(object):
     def on_check_box_changed(self):
         self.photoLineEdit.setEnabled(self.photoCheckBox.isChecked())
         self.photoPushButton.setEnabled(self.photoCheckBox.isChecked())
+
+    def on_table_item_changed(self, test):
+        rowNum = self.urlTableWidget.rowCount()
+        temp_item = self.urlTableWidget.item(rowNum - 1, 0)
+        if not temp_item or not temp_item.text().strip():
+            return
+        self.urlTableWidget.insertRow(rowNum)
 
 
 if __name__ == "__main__":
