@@ -17,12 +17,13 @@ class Ui_MainWindow(object):
         self.imdbLabel.setGeometry(QtCore.QRect(40, 110, 91, 19))
         self.imdbLabel.setObjectName("imdbLabel")
         self.photoLabel = QtWidgets.QLabel(self.centralwidget)
-        self.photoLabel.setGeometry(QtCore.QRect(70, 160, 101, 19))
+        self.photoLabel.setGeometry(QtCore.QRect(70, 163, 101, 19))
         self.photoLabel.setObjectName("photoLabel")
         self.photoCheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.photoCheckBox.setGeometry(QtCore.QRect(40, 159, 16, 25))
         self.photoCheckBox.setText("")
         self.photoCheckBox.setObjectName("photoCheckBox")
+        self.photoCheckBox.setChecked(True)
         self.nameLineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.nameLineEdit.setGeometry(QtCore.QRect(160, 27, 221, 27))
         self.nameLineEdit.setObjectName("nameLineEdit")
@@ -75,12 +76,18 @@ class Ui_MainWindow(object):
         self.photoPushButton.setText(_translate("MainWindow", "..."))
 
         self.directoryPushButton.clicked.connect(self.on_directory)
+        self.photoPushButton.clicked.connect(self.on_photo)
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
         if folder != '':
             self.directoryLineEdit.setText(folder)
 
+    def on_photo(self):
+        photo = QtWidgets.QFileDialog.getOpenFileName(
+            filter="Image files (*.jpg *.png)")
+        if photo[0] != 0:
+            self.photoLineEdit.setText(photo[0])
 
 if __name__ == "__main__":
     import sys
