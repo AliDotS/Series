@@ -77,6 +77,7 @@ class Ui_MainWindow(object):
 
         self.directoryPushButton.clicked.connect(self.on_directory)
         self.photoPushButton.clicked.connect(self.on_photo)
+        self.photoCheckBox.stateChanged['int'].connect(self.on_check_box_changed)
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
@@ -88,6 +89,11 @@ class Ui_MainWindow(object):
             filter="Image files (*.jpg *.png)")
         if photo[0] != 0:
             self.photoLineEdit.setText(photo[0])
+
+    def on_check_box_changed(self):
+        self.photoLineEdit.setEnabled(self.photoCheckBox.isChecked())
+        self.photoPushButton.setEnabled(self.photoCheckBox.isChecked())
+
 
 if __name__ == "__main__":
     import sys
