@@ -25,7 +25,8 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.nameLabel = QtWidgets.QLabel(self.centralwidget)
         self.nameLabel.setGeometry(QtCore.QRect(20, 60, 65, 21))
-        self.nameLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.nameLabel.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.nameLabel.setObjectName("nameLabel")
         self.directoryLabel = QtWidgets.QLabel(self.centralwidget)
         self.directoryLabel.setGeometry(QtCore.QRect(20, 100, 81, 21))
@@ -78,7 +79,8 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.photoCheckBox.stateChanged['int'].connect(self.on_check_box_changed)
+        self.photoCheckBox.stateChanged['int'].connect(
+            self.on_check_box_changed)
         self.addPushButton.clicked.connect(self.on_add_button)
         self.directoryPushButton.clicked.connect(self.on_directory)
         self.photoPushButton.clicked.connect(self.on_photo)
@@ -87,7 +89,8 @@ class Ui_MainWindow(object):
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.nameLineEdit, self.directoryLineEdit)
-        MainWindow.setTabOrder(self.directoryLineEdit, self.directoryPushButton)
+        MainWindow.setTabOrder(self.directoryLineEdit,
+                               self.directoryPushButton)
         MainWindow.setTabOrder(self.directoryPushButton, self.photoCheckBox)
         MainWindow.setTabOrder(self.photoCheckBox, self.photoPathLineEdit)
         MainWindow.setTabOrder(self.photoPathLineEdit, self.photoPushButton)
@@ -111,13 +114,19 @@ class Ui_MainWindow(object):
     def on_table_item_changed(self, test):
         rowNum = self.urlsTableWidget.rowCount()
         temp_item = self.urlsTableWidget.item(rowNum - 1, 0)
-        if rowNum == 1 and temp_item is None:
+
+        if rowNum == 1 and (temp_item is None or not temp_item.text().strip()):
             return
-        elif temp_item is None or not temp_item.text().strip():
-            temp2_item = self.urlsTableWidget.item(rowNum - 2, 0)
-            if temp2_item and not temp2_item.text().strip():
-                self.urlsTableWidget.removeRow(rowNum - 2)
-        else:
+
+        for index in reversed(range(rowNum - 1)):
+            temp_row = self.urlsTableWidget.item(index, 0)
+            if temp_row is None or not temp_row.text().strip():
+                self.urlsTableWidget.removeRow(index)
+
+        rowNum = self.urlsTableWidget.rowCount()
+        temp_item = self.urlsTableWidget.item(rowNum - 1, 0)
+
+        if temp_item and temp_item.text().strip():
             self.urlsTableWidget.insertRow(rowNum)
 
     def on_check_box_changed(self):
