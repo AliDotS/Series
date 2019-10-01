@@ -111,9 +111,14 @@ class Ui_MainWindow(object):
     def on_table_item_changed(self, test):
         rowNum = self.urlsTableWidget.rowCount()
         temp_item = self.urlsTableWidget.item(rowNum - 1, 0)
-        if not temp_item or not temp_item.text().strip():
+        if rowNum == 1 and temp_item is None:
             return
-        self.urlsTableWidget.insertRow(rowNum)
+        elif temp_item is None or not temp_item.text().strip():
+            temp2_item = self.urlsTableWidget.item(rowNum - 2, 0)
+            if temp2_item and not temp2_item.text().strip():
+                self.urlsTableWidget.removeRow(rowNum - 2)
+        else:
+            self.urlsTableWidget.insertRow(rowNum)
 
     def on_check_box_changed(self):
         self.photoPathLineEdit.setEnabled(self.photoCheckBox.isChecked())
