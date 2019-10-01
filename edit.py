@@ -98,9 +98,14 @@ class Ui_MainWindow(object):
     def on_table_item_changed(self, test):
         rowNum = self.urlTableWidget.rowCount()
         temp_item = self.urlTableWidget.item(rowNum - 1, 0)
-        if not temp_item or not temp_item.text().strip():
+        if rowNum == 1 and temp_item is None:
             return
-        self.urlTableWidget.insertRow(rowNum)
+        elif temp_item is None or not temp_item.text().strip():
+            temp2_item = self.urlTableWidget.item(rowNum - 2, 0)
+            if temp2_item and not temp2_item.text().strip():
+                self.urlTableWidget.removeRow(rowNum - 2)
+        else:
+            self.urlTableWidget.insertRow(rowNum)
 
 
 if __name__ == "__main__":
