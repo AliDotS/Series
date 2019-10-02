@@ -15,9 +15,18 @@ def is_url(url):
         return False
 
 
+class series_data():
+    name = ''
+    directory = ''
+    photo = ''
+    imdb_url = ''
+    urls = []
+
+
 class Ui_MainWindow(object):
     imdb_url = ''
-
+    adding = True
+    seriesData = series_data()
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(668, 467)
@@ -151,7 +160,7 @@ class Ui_MainWindow(object):
     def on_search(self):
         self.sMain = QtWidgets.QMainWindow()
         self.sUI = searchUI()
-        self.sUI.perName = self.nameLineEdit.text()
+        self.sUI.perName = self.naperNamemeLineEdit.text()
         self.sUI.setupUi(self.sMain)
         self.sUI.set_imdb = self.set_imdb_url
         self.sMain.show()
