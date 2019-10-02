@@ -160,7 +160,7 @@ class Ui_MainWindow(object):
     def on_search(self):
         self.sMain = QtWidgets.QMainWindow()
         self.sUI = searchUI()
-        self.sUI.perName = self.naperNamemeLineEdit.text()
+        self.sUI.perName = self.nameLineEdit.text()
         self.sUI.setupUi(self.sMain)
         self.sUI.set_imdb = self.set_imdb_url
         self.sMain.show()
@@ -212,6 +212,17 @@ class Ui_MainWindow(object):
 
         seriesServices.createSeries(name, imdb_url, directory, urls, photo)
 
+    def setup_edit(self, name, directory, imdb_url, photo, urls):
+        self.nameLineEdit.setText(name)
+        self.directoryLineEdit.setText(directory)
+        self.imdbLineEdit.setText(imdb_url)
+        self.photoPathLineEdit.setText(photo)
+        for index, url in enumerate(urls):
+            if index != 0:
+                self.urlsTableWidget.insertRow(index)
+            item = QtWidgets.QTableWidgetItem(url)
+            self.urlsTableWidget.setItem(index, 0,item)
+
 
 if __name__ == "__main__":
     import sys
@@ -220,4 +231,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    ui.setup_edit('test', 'testd', 'testi', 'testp', ['hello1', 'hello2'])
     sys.exit(app.exec_())
