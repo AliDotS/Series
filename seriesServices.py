@@ -142,6 +142,13 @@ def getSeries():
         yield item
 
 
+def getSeriesSingle(name):
+    singleSeries = series.find_one({'name' : name})
+
+    if not singleSeries:
+        return "hello"
+    return singleSeries
+
 def get_last_file(path):
     biggest = 0
     for _, _, files in os.walk(path):
@@ -195,4 +202,5 @@ def search(name):
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
-    pprint(search('robocop')[0].__dict__)
+    # pprint(search('robocop')[0].__dict__)
+    pprint(getSeriesSingle('bigbang'))
