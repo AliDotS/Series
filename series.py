@@ -19,6 +19,8 @@ class Ui_MainWindow(object):
         self.seriesTableWidget.setObjectName("seriesTableWidget")
         self.seriesTableWidget.setColumnCount(4)
         self.seriesTableWidget.setRowCount(0)
+        self.seriesTableWidget.setSelectionMode(Qt.QAbstractItemView.SingleSelection)
+        self.seriesTableWidget.setSelectionBehavior(Qt.QAbstractItemView.SelectRows)
         item = QtWidgets.QTableWidgetItem()
         self.seriesTableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -96,6 +98,15 @@ class Ui_MainWindow(object):
         self.add = addForm.Ui_MainWindow()
         self.add.setupUi(self.addf)
         self.addf.show()
+
+    def editWindow(self):
+        self.eMain = QtWidgets.QMainWindow()
+        self.eUI = addForm.Ui_MainWindow()
+        self.eUI.setupUi(self.eMain)
+        self.eMain.show()
+
+    def on_edit(self):
+        pass
 
 
 if __name__ == "__main__":
