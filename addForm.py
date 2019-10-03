@@ -135,7 +135,10 @@ class Ui_MainWindow(object):
 
     def on_add_button(self):
         if self.validate_form():
-            self.create_series()
+            if self.adding:
+                self.create_series()
+            else:
+                pass
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
