@@ -77,6 +77,8 @@ class Ui_MainWindow(object):
         self.addPushButton.setText(_translate("MainWindow", "&Add"))
         self.setPhotoPushButton.setText(_translate("MainWindow", "&Set Photo"))
 
+        self.editPushButton.clicked.connect(self.on_edit)
+
     def checkSeries(self):
         print("Checking...")
         for index, series in enumerate(seriesServices.getSeries()):
@@ -99,14 +101,21 @@ class Ui_MainWindow(object):
         self.add.setupUi(self.addf)
         self.addf.show()
 
-    def editWindow(self):
+    def editWindow(self, data):
         self.eMain = QtWidgets.QMainWindow()
         self.eUI = addForm.Ui_MainWindow()
         self.eUI.setupUi(self.eMain)
+        self.eUI.setup_edit(data['name'], data['directory'], data['imdbUrl'], data['photo'], data['urls'])
         self.eMain.show()
 
     def on_edit(self):
-        pass
+        item = self.seriesTableWidget.selectedItems()
+        if not item:
+            return
+        seriesData = seriesServices.getSeriesSingle(item[0].text())
+        if seriesData is None:
+            return
+        self.editWindow(seriesData)
 
 
 if __name__ == "__main__":
