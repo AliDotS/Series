@@ -105,6 +105,7 @@ class Ui_MainWindow(object):
         self.eMain = QtWidgets.QMainWindow()
         self.eUI = addForm.Ui_MainWindow()
         self.eUI.setupUi(self.eMain)
+        self.eUI.adding = False
         self.eUI.setup_edit(data['name'], data['directory'], data['imdbUrl'], data['photo'], data['urls'])
         self.eMain.show()
 
