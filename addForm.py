@@ -18,6 +18,7 @@ def is_url(url):
 class Ui_MainWindow(object):
     imdb_url = ''
     adding = True
+    oldName = ''
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(668, 467)
@@ -138,7 +139,10 @@ class Ui_MainWindow(object):
             if self.adding:
                 self.create_series()
             else:
-                pass
+                urls = []
+                for num in range(self.urlsTableWidget.rowCount()):
+                    urls.append(self.urlsTableWidget.item(num, 0).text())
+                seriesServices.updateSeries(self.oldName, self.nameLineEdit.text(), self.imdbLineEdit.text(), self.directoryLineEdit.text(), urls)
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
@@ -208,6 +212,7 @@ class Ui_MainWindow(object):
 
     def setup_edit(self, name, directory, imdb_url, photo, urls):
         self.nameLineEdit.setText(name)
+        self.oldName = name
         self.directoryLineEdit.setText(directory)
         self.imdbLineEdit.setText(imdb_url)
         self.photoPathLineEdit.setText(photo)
