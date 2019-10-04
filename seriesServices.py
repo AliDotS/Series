@@ -63,13 +63,14 @@ def createSeries(name: str, url: str, directory: str, urls: [str], photo = ''):
     return 0
 
 
-def updateSeries(oldName: str, newName: str, url: str, directory: str, urls: [str]):
+def updateSeries(oldName: str, newName: str, url: str, directory: str, photo: str, urls: [str]):
     result = series.update_one({
         'name': oldName
     }, {
         'name': newName,
         'imdbUrl': url,
         'directory': directory,
+        'photo' : photo
         'urls': urls
     })
 
