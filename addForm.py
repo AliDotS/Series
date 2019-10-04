@@ -19,6 +19,7 @@ class Ui_MainWindow(object):
     imdb_url = ''
     adding = True
     oldName = ''
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(668, 467)
@@ -142,7 +143,8 @@ class Ui_MainWindow(object):
                 urls = []
                 for num in range(self.urlsTableWidget.rowCount()):
                     urls.append(self.urlsTableWidget.item(num, 0).text())
-                seriesServices.updateSeries(self.oldName, self.nameLineEdit.text(), self.imdbLineEdit.text(), self.directoryLineEdit.text(), self.photoPathLineEdit.text(), urls)
+                seriesServices.updateSeries(self.oldName, self.nameLineEdit.text(), self.imdbLineEdit.text(
+                ), self.directoryLineEdit.text(), self.photoPathLineEdit.text(), urls)
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
@@ -202,7 +204,7 @@ class Ui_MainWindow(object):
     def create_series(self):
         name = self.nameLineEdit.text()
         directory = self.directoryLineEdit.text()
-        imdb_url = ''
+        imdb_url = self.imdbLineEdit.text()
         photo = self.photoPathLineEdit.text()
         urls = []
         for row in range(self.urlsTableWidget.rowCount() - 1):
@@ -220,7 +222,7 @@ class Ui_MainWindow(object):
             if index != 0:
                 self.urlsTableWidget.insertRow(index)
             item = QtWidgets.QTableWidgetItem(url)
-            self.urlsTableWidget.setItem(index, 0,item)
+            self.urlsTableWidget.setItem(index, 0, item)
 
 
 if __name__ == "__main__":
