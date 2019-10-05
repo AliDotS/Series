@@ -70,7 +70,7 @@ def updateSeries(oldName: str, newName: str, url: str, directory: str, photo: st
         'name': newName,
         'imdbUrl': url,
         'directory': directory,
-        'photo' : photo
+        'photo' : photo,
         'urls': urls
     })
 
@@ -117,7 +117,8 @@ def checkOut(name: str):
 
     for url in tvSeries['urls']:
         page = get_content(url)
-
+        if page is None:
+            continue
         results = prog.findall(page)
 
         # return []
