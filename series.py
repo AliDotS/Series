@@ -78,6 +78,7 @@ class Ui_MainWindow(object):
         self.updatePushButton.setText(_translate("MainWindow", "&Update"))
 
         self.editPushButton.clicked.connect(self.on_edit)
+        self.updatePushButton.clicked.connect(self.on_update)
 
     def checkSeries(self):
         print("Checking...")
@@ -117,6 +118,13 @@ class Ui_MainWindow(object):
         if seriesData is None:
             return
         self.editWindow(seriesData)
+
+    def on_update(self):
+        result = seriesServices.updateAll()
+        if not result:
+            print('Failed')
+        else:
+            print('Success')
 
 
 if __name__ == "__main__":
