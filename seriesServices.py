@@ -13,6 +13,38 @@ series = MongoClient().imdb.series
 movie_exts = r'\.mkv$|\.mp4$|\.avi$|\.flv$|\.mpeg$|\.mpg$'
 
 
+def updateAll():
+    if not series.find_one():
+        return 0
+
+    failed = False
+    for tvSeries in getSeries():
+        url = tvSeries['imdbUrl']
+        content = get_content(url)
+        if content is None:
+            failed = True
+            continue
+
+        tree = html.fromstring(content)
+        dates = [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
+        names = tree.xpath('//a[@itemprop="name"]/text()')
+        result = series.update_one({
+            'name': tvSeries['name']
+        },
+            {
+                '$set': {
+                    'dates': dates,
+                    'names': names,
+                }
+        })
+
+        if result.matched_count <= 0:
+            failed = True
+
+    if failed:
+        return False
+    return True
+
 def getData(name: str):
     if not series.find_one({'name': name}):
         return 0
@@ -42,7 +74,7 @@ def getData(name: str):
     return 0
 
 
-def createSeries(name: str, url: str, directory: str, urls: [str], photo = ''):
+def createSeries(name: str, url: str, directory: str, urls: [str], photo=''):
     if series.find_one({'name': name}):
         return 0
 
@@ -53,7 +85,7 @@ def createSeries(name: str, url: str, directory: str, urls: [str], photo = ''):
         'name': name,
         'imdbUrl': url,
         'directory': directory,
-        'photo' : photo,
+        'photo': photo,
         'urls': urls
     })
 
@@ -70,7 +102,7 @@ def updateSeries(oldName: str, newName: str, url: str, directory: str, photo: st
         'name': newName,
         'imdbUrl': url,
         'directory': directory,
-        'photo' : photo,
+        'photo': photo,
         'urls': urls
     })
 
@@ -145,11 +177,12 @@ def getSeries():
 
 
 def getSeriesSingle(name):
-    singleSeries = series.find_one({'name' : name})
+    singleSeries = series.find_one({'name': name})
 
     if not singleSeries:
         return "hello"
     return singleSeries
+
 
 def get_last_file(path):
     biggest = 0
@@ -193,16 +226,18 @@ def search(name):
     details = imdb_search_result()
     for result in results:
         details.img = result.xpath('.//img/@src')[0]
-        details.name = result.xpath('.//td[@class = "result_text"]/a/text()')[0]
+        details.name = result.xpath(
+            './/td[@class = "result_text"]/a/text()')[0]
         details.name += result.xpath('.//td[@class = "result_text"]/text()')[1]
-        details.imdb_link = result.xpath('.//td[@class = "result_text"]/a/@href')[0]
+        details.imdb_link = result.xpath(
+            './/td[@class = "result_text"]/a/@href')[0]
         details.imdb_link = site + details.imdb_link
         final_results.append(deepcopy(details))
     return final_results if final_results else None
 
 
-
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
     # pprint(search('robocop')[0].__dict__)
-    pprint(getSeriesSingle('bigbang'))
+    # pprint(getSeriesSingle('bigbang'))
+    updateAll()
