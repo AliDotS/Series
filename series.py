@@ -120,12 +120,17 @@ class Ui_MainWindow(object):
         self.editWindow(seriesData)
 
     def on_update(self):
-        result = seriesServices.updateAll()
-        if not result:
-            print('Failed')
-        else:
-            print('Success')
-
+        for index, series in enumerate(seriesServices.getSeries()):
+            result = seriesServices.getData(series['name'])
+            brush = Qt.QBrush()
+            if result:
+                item = QtWidgets.QTableWidgetItem("updated")
+                brush.setColor(QColor(0, 200, 0))
+            else:
+                item = QtWidgets.QTableWidgetItem("update failed")
+                brush.setColor(QColor(200, 0, 0))
+            item.setForeground(brush)
+            self.seriesTableWidget.setItem(index, 3, item)
 
 if __name__ == "__main__":
     import sys
