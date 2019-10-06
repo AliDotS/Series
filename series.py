@@ -121,6 +121,7 @@ class Ui_MainWindow(object):
 
     def on_update(self):
         self.updatePushButton.setText('updating...')
+        self.updatePushButton.setEnabled(False)
         Qt.QApplication.processEvents()
         for index, series in enumerate(seriesServices.getSeries()):
             result = seriesServices.getData(series['name'])
@@ -134,6 +135,7 @@ class Ui_MainWindow(object):
             item.setForeground(brush)
             self.seriesTableWidget.setItem(index, 3, item)
         self.updatePushButton.setText('&Update')
+        self.updatePushButton.setEnabled(True)
         Qt.QApplication.processEvents()
 
 if __name__ == "__main__":
