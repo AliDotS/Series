@@ -120,6 +120,8 @@ class Ui_MainWindow(object):
         self.editWindow(seriesData)
 
     def on_update(self):
+        self.updatePushButton.setText('updating...')
+        Qt.QApplication.processEvents()
         for index, series in enumerate(seriesServices.getSeries()):
             result = seriesServices.getData(series['name'])
             brush = Qt.QBrush()
@@ -131,6 +133,8 @@ class Ui_MainWindow(object):
                 brush.setColor(QColor(200, 0, 0))
             item.setForeground(brush)
             self.seriesTableWidget.setItem(index, 3, item)
+        self.updatePushButton.setText('&Update')
+        Qt.QApplication.processEvents()
 
 if __name__ == "__main__":
     import sys
