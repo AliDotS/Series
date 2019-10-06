@@ -47,18 +47,16 @@ def updateAll():
 
 def getData(name: str):
     if not series.find_one({'name': name}):
-        return 0
+        return False
 
     url = series.find_one({'name': name})['imdbUrl']
 
-    req = requests.get(url)
-
-    tree = html.fromstring(req.content)
-
+    content = get_content(url)
+    if content is None:
+        return False
+    tree = html.fromstring(content)
     dates = [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
-
     names = tree.xpath('//a[@itemprop="name"]/text()')
-
     result = series.update_one({
         'name': name
     },
@@ -69,9 +67,9 @@ def getData(name: str):
             }
     })
 
-    if result.matched_count > 0:
-        return 1
-    return 0
+    if result.matched_count <= 0:
+        return False
+    return True
 
 
 def createSeries(name: str, url: str, directory: str, urls: [str], photo=''):
