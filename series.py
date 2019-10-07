@@ -103,6 +103,9 @@ class Ui_MainWindow(object):
         return True
 
     def checkSeries(self):
+        if self.status:
+            return
+        self.status = 'checking'
         print("Checking...")
         for index, series in enumerate(seriesServices.getSeries()):
             results = seriesServices.checkOut(series['name'])
@@ -117,6 +120,7 @@ class Ui_MainWindow(object):
             self.seriesTableWidget.setItem(index, 3, item)
             QtWidgets.QApplication.processEvents()
         print('finished')
+        self.status = ''
 
     def addWindow(self):
         self.addf = QtWidgets.QMainWindow()
