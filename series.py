@@ -91,7 +91,9 @@ class Ui_MainWindow(object):
                 self.seriesTableWidget.setItem(position, 1, QtWidgets.QTableWidgetItem(series['season']))
                 self.seriesTableWidget.setItem(position, 2, QtWidgets.QTableWidgetItem(series['episode']))
         except Exception:
+            self.loadPushButton.setStyleSheet('background-color: red')
             return False
+        self.loadPushButton.setStyleSheet('background-color: normal')
         return True
 
     def checkSeries(self):
