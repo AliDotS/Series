@@ -84,6 +84,20 @@ class Ui_MainWindow(object):
 
         self.editPushButton.clicked.connect(self.on_edit)
         self.updatePushButton.clicked.connect(self.on_update)
+        self.loadPushButton.clicked.connect(self.on_load)
+
+    def on_load(self):
+        try:
+            self.seriesTableWidget.setRowCount(0)
+            for series in seriesServices.getSeries():
+                position = self.seriesTableWidget.rowCount()
+                self.seriesTableWidget.insertRow(position)
+                self.seriesTableWidget.setItem(position, 0, QtWidgets.QTableWidgetItem(series['name']))
+                self.seriesTableWidget.setItem(position, 1, QtWidgets.QTableWidgetItem(series['season']))
+                self.seriesTableWidget.setItem(position, 2, QtWidgets.QTableWidgetItem(series['episode']))
+        except Exception:
+            return False
+        return True
 
     def checkSeries(self):
         print("Checking...")
