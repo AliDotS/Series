@@ -83,6 +83,8 @@ class Ui_MainWindow(object):
         self.loadPushButton.clicked.connect(self.on_load)
 
     def on_load(self):
+        if self.status:
+            return
         self.status = 'loading'
         try:
             self.seriesTableWidget.setRowCount(0)
@@ -94,8 +96,10 @@ class Ui_MainWindow(object):
                 self.seriesTableWidget.setItem(position, 2, QtWidgets.QTableWidgetItem(series['episode']))
         except Exception:
             self.loadPushButton.setStyleSheet('background-color: red')
+            self.status = ''
             return False
         self.loadPushButton.setStyleSheet('background-color: normal')
+        self.status = ''
         return True
 
     def checkSeries(self):
