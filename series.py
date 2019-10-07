@@ -57,12 +57,7 @@ class Ui_MainWindow(object):
         self.addPushButton.clicked.connect(self.addWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        for series in seriesServices.getSeries():
-            position = self.seriesTableWidget.rowCount()
-            self.seriesTableWidget.insertRow(position)
-            self.seriesTableWidget.setItem(position, 0, QtWidgets.QTableWidgetItem(series['name']))
-            self.seriesTableWidget.setItem(position, 1, QtWidgets.QTableWidgetItem(series['season']))
-            self.seriesTableWidget.setItem(position, 2, QtWidgets.QTableWidgetItem(series['episode']))
+        self.on_load()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
