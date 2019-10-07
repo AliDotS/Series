@@ -44,6 +44,9 @@ class Ui_MainWindow(object):
         self.updatePushButton = QtWidgets.QPushButton(self.centralwidget)
         self.updatePushButton.setGeometry(QtCore.QRect(470, 220, 93, 29))
         self.updatePushButton.setObjectName("updatePushButton")
+        self.loadPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.loadPushButton.setGeometry(QtCore.QRect(470, 20, 93, 29))
+        self.loadPushButton.setObjectName("loadPushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -76,6 +79,8 @@ class Ui_MainWindow(object):
         self.editPushButton.setText(_translate("MainWindow", "&Edit"))
         self.addPushButton.setText(_translate("MainWindow", "&Add"))
         self.updatePushButton.setText(_translate("MainWindow", "&Update"))
+        self.loadPushButton.setText(_translate("MainWindow", "&Load"))
+
 
         self.editPushButton.clicked.connect(self.on_edit)
         self.updatePushButton.clicked.connect(self.on_update)
