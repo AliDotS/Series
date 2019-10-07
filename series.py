@@ -4,6 +4,7 @@ import addForm
 import seriesServices
 
 class Ui_MainWindow(object):
+    status = ''
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(602, 423)
@@ -82,6 +83,7 @@ class Ui_MainWindow(object):
         self.loadPushButton.clicked.connect(self.on_load)
 
     def on_load(self):
+        self.status = 'loading'
         try:
             self.seriesTableWidget.setRowCount(0)
             for series in seriesServices.getSeries():
