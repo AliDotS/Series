@@ -159,6 +159,9 @@ class Ui_MainWindow(object):
         self.editWindow(seriesData)
 
     def on_update(self):
+        if self.status:
+            return
+        self.status =  'updating'
         self.updatePushButton.setText('updating...')
         self.updatePushButton.setEnabled(False)
         Qt.QApplication.processEvents()
@@ -175,6 +178,7 @@ class Ui_MainWindow(object):
             self.seriesTableWidget.setItem(index, 3, item)
         self.updatePushButton.setText('&Update')
         self.updatePushButton.setEnabled(True)
+        self.status = ''
         Qt.QApplication.processEvents()
 
 
