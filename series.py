@@ -139,8 +139,6 @@ class Ui_MainWindow(object):
         self.addf.show()
 
     def editWindow(self, data):
-        if self.status:
-            return
         self.eMain = QtWidgets.QMainWindow()
         self.eUI = addForm.Ui_MainWindow()
         self.eUI.setupUi(self.eMain)
@@ -150,6 +148,8 @@ class Ui_MainWindow(object):
         self.eMain.show()
 
     def on_edit(self):
+        if self.status:
+            return
         item = self.seriesTableWidget.selectedItems()
         if not item:
             return
