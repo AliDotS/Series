@@ -3,8 +3,10 @@ from PyQt5.QtGui import QColor
 import addForm
 import seriesServices
 
+
 class Ui_MainWindow(object):
     status = ''
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(602, 423)
@@ -12,16 +14,20 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.seriesTableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.seriesTableWidget.setGeometry(QtCore.QRect(0, 0, 441, 401))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.seriesTableWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.seriesTableWidget.sizePolicy().hasHeightForWidth())
         self.seriesTableWidget.setSizePolicy(sizePolicy)
         self.seriesTableWidget.setObjectName("seriesTableWidget")
         self.seriesTableWidget.setColumnCount(4)
         self.seriesTableWidget.setRowCount(0)
-        self.seriesTableWidget.setSelectionMode(Qt.QAbstractItemView.SingleSelection)
-        self.seriesTableWidget.setSelectionBehavior(Qt.QAbstractItemView.SelectRows)
+        self.seriesTableWidget.setSelectionMode(
+            Qt.QAbstractItemView.SingleSelection)
+        self.seriesTableWidget.setSelectionBehavior(
+            Qt.QAbstractItemView.SelectRows)
         item = QtWidgets.QTableWidgetItem()
         self.seriesTableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -77,7 +83,6 @@ class Ui_MainWindow(object):
         self.updatePushButton.setText(_translate("MainWindow", "&Update"))
         self.loadPushButton.setText(_translate("MainWindow", "&Load"))
 
-
         self.editPushButton.clicked.connect(self.on_edit)
         self.updatePushButton.clicked.connect(self.on_update)
         self.loadPushButton.clicked.connect(self.on_load)
@@ -91,9 +96,12 @@ class Ui_MainWindow(object):
             for series in seriesServices.getSeries():
                 position = self.seriesTableWidget.rowCount()
                 self.seriesTableWidget.insertRow(position)
-                self.seriesTableWidget.setItem(position, 0, QtWidgets.QTableWidgetItem(series['name']))
-                self.seriesTableWidget.setItem(position, 1, QtWidgets.QTableWidgetItem(series['season']))
-                self.seriesTableWidget.setItem(position, 2, QtWidgets.QTableWidgetItem(series['episode']))
+                self.seriesTableWidget.setItem(
+                    position, 0, QtWidgets.QTableWidgetItem(series['name']))
+                self.seriesTableWidget.setItem(
+                    position, 1, QtWidgets.QTableWidgetItem(series['season']))
+                self.seriesTableWidget.setItem(
+                    position, 2, QtWidgets.QTableWidgetItem(series['episode']))
         except Exception:
             self.loadPushButton.setStyleSheet('background-color: red')
             self.status = ''
@@ -125,18 +133,20 @@ class Ui_MainWindow(object):
     def addWindow(self):
         if self.status:
             return
-        # self.status = 'adding'
         self.addf = QtWidgets.QMainWindow()
         self.add = addForm.Ui_MainWindow()
         self.add.setupUi(self.addf)
         self.addf.show()
 
     def editWindow(self, data):
+        if self.status:
+            return
         self.eMain = QtWidgets.QMainWindow()
         self.eUI = addForm.Ui_MainWindow()
         self.eUI.setupUi(self.eMain)
         self.eUI.adding = False
-        self.eUI.setup_edit(data['name'], data['directory'], data['imdbUrl'], data['photo'], data['urls'])
+        self.eUI.setup_edit(data['name'], data['directory'],
+                            data['imdbUrl'], data['photo'], data['urls'])
         self.eMain.show()
 
     def on_edit(self):
@@ -166,6 +176,7 @@ class Ui_MainWindow(object):
         self.updatePushButton.setText('&Update')
         self.updatePushButton.setEnabled(True)
         Qt.QApplication.processEvents()
+
 
 if __name__ == "__main__":
     import sys
