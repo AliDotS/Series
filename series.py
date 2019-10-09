@@ -123,6 +123,9 @@ class Ui_MainWindow(object):
         self.status = ''
 
     def addWindow(self):
+        if self.status:
+            return
+        # self.status = 'adding'
         self.addf = QtWidgets.QMainWindow()
         self.add = addForm.Ui_MainWindow()
         self.add.setupUi(self.addf)
