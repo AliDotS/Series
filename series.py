@@ -123,6 +123,12 @@ class Ui_MainWindow(object):
             if results:
                 item = QtWidgets.QTableWidgetItem('OUT')
                 brush.setColor(QColor(0, 255, 0))
+                box = QtWidgets.QComboBox()
+                box.setEditable(True)
+                box.setFixedWidth(100)
+                for value in results:
+                    box.addItem(value)
+                self.seriesTableWidget.setCellWidget(index, 4, box)
             else:
                 item = QtWidgets.QTableWidgetItem('not out')
                 brush.setColor(QColor(255, 0, 0))
