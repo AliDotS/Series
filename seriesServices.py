@@ -146,6 +146,15 @@ def checkOut(name: str):
             num = 1
         else:
             return
+    elif tvSeries['atStart']:
+        series.update_one({
+            "name" : tvSeries['name']
+        },
+        {
+            '$set': {
+                'atStart' : False
+            }
+        })
 
     episode = '%02i' % num
 
