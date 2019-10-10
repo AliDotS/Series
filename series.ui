@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
-    <height>423</height>
+    <width>656</width>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>441</width>
-      <height>401</height>
+      <width>515</width>
+      <height>411</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -58,12 +58,17 @@
       <string>Status</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>result</string>
+     </property>
+    </column>
    </widget>
    <widget class="QPushButton" name="checkPushButton">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>70</y>
+      <x>540</x>
+      <y>80</y>
       <width>93</width>
       <height>29</height>
      </rect>
@@ -75,8 +80,8 @@
    <widget class="QPushButton" name="editPushButton">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>120</y>
+      <x>540</x>
+      <y>130</y>
       <width>93</width>
       <height>29</height>
      </rect>
@@ -88,8 +93,8 @@
    <widget class="QPushButton" name="addPushButton">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>170</y>
+      <x>540</x>
+      <y>180</y>
       <width>93</width>
       <height>29</height>
      </rect>
@@ -101,8 +106,8 @@
    <widget class="QPushButton" name="setPhotoPushButton">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>220</y>
+      <x>540</x>
+      <y>230</y>
       <width>93</width>
       <height>29</height>
      </rect>
@@ -114,8 +119,8 @@
    <widget class="QPushButton" name="loadPushButton">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>20</y>
+      <x>540</x>
+      <y>30</y>
       <width>93</width>
       <height>29</height>
      </rect>
