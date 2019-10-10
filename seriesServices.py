@@ -142,7 +142,10 @@ def checkOut(name: str):
     num = get_last_file(tvSeries['directory'])
 
     if num is None:
-        return
+        if tvSeries['atStart']:
+            num = 1
+        else:
+            return
 
     episode = '%02i' % num
 
