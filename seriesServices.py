@@ -79,13 +79,18 @@ def createSeries(name: str, url: str, directory: str, urls: [str], photo=''):
     if not os.path.isdir(directory):
         return 0
 
-    result = series.insert_one({
+    new_series = {
         'name': name,
         'imdbUrl': url,
         'directory': directory,
         'photo': photo,
-        'urls': urls
-    })
+        'urls': urls,
+        'atStart' : False
+    }
+    episode = get_last_file(directory)
+    if episode is None:
+        new_series.update({'atStart': True})
+    result = series.insert_one(new_series)
 
     if result.acknowledged:
         return 1
