@@ -211,6 +211,7 @@ class Ui_MainWindow(object):
             urls.append(self.urlsTableWidget.item(row, 0).text())
 
         seriesServices.createSeries(name, imdb_url, directory, urls, photo)
+        self.centralwidget.parent().close()
 
     def setup_edit(self, name, directory, imdb_url, photo, urls):
         self.nameLineEdit.setText(name)
