@@ -224,6 +224,7 @@ class Ui_MainWindow(object):
                 self.urlsTableWidget.insertRow(index)
             item = QtWidgets.QTableWidgetItem(url)
             self.urlsTableWidget.setItem(index, 0, item)
+        self.addPushButton.setText("&Edit")
 
 
 if __name__ == "__main__":
