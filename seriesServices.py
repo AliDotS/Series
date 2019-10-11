@@ -106,7 +106,8 @@ def updateSeries(oldName: str, newName: str, url: str, directory: str, photo: st
         'imdbUrl': url,
         'directory': directory,
         'photo': photo,
-        'urls': urls
+        'urls': urls,
+        'atStart' : True
     })
 
     if result.acknowledged:
