@@ -266,9 +266,28 @@ def get_season(imdb_id: str):
         season = int(season[0].strip())
     except Exception:
         return
-    # return get_confirmed_season(imdb_id, season)
+    return get_confirmed_season(imdb_id, season)
 
-
+def get_confirmed_season(imdb_id, season):
+    dates = {}
+    dates.update({season: get_dates(imdb_id, season)})
+    now = datetime.now()
+    while(season > 0):
+        for index, date in reversed(list(enumerate(dates[season]))):
+            try:
+                if '.' in date:
+                    current = datetime.strptime(date, "%d %b. %Y").date()
+                else:
+                    current = datetime.strptime(date, "%d %b %Y").date()
+            except Exception:
+                continue
+            if current <= now.date():
+                if index == len(dates[season]) - 1:
+                    return season + 1
+                else:
+                    return season
+        season -= 1
+        dates.update({season: get_dates(imdb_id, season)})
 
 
 def get_dates(imdb_id, season):
