@@ -220,7 +220,11 @@ class Ui_MainWindow(object):
         self.oldName = name
         self.directoryLineEdit.setText(directory)
         self.imdbLineEdit.setText(imdb_url)
-        self.photoPathLineEdit.setText(photo)
+        if photo:
+            self.photoPathLineEdit.setText(photo)
+            self.addPushButton.setEnabled(True)
+            self.photoCheckBox.setChecked(True)
+            self.photoPathLineEdit.setEnabled(True)
         for index, url in enumerate(urls):
             if index != 0:
                 self.urlsTableWidget.insertRow(index)
