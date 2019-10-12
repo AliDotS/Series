@@ -6,6 +6,7 @@ from lxml.html import fromstring
 from copy import deepcopy
 from pprint import pprint
 from pymongo import MongoClient
+from datetime import datetime
 
 series = MongoClient().imdb.series
 
@@ -265,20 +266,23 @@ def get_season(imdb_id: str):
         season = int(season[0].strip())
     except Exception:
         return
-    return get_confirmed_season(imdb_id, season)
+    # return get_confirmed_season(imdb_id, season)
 
-def get_confirmed_season(imdb_id, season):
+
+
+
+def get_dates(imdb_id, season):
     url = f"https://www.imdb.com/title/{imdb_id}/episodes?season={season}"
     content = get_content(url)
     if not content:
         return
     tree =  fromstring(content)
-    dates = [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
-    pprint(dates)
+    return [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
+
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
     # pprint(search('robocop')[0].__dict__)
     # pprint(getSeriesSingle('bigbang'))
-    get_season('tt4158110')
-    get_season('tt1043813')
+    print(get_season('tt4158110'),\
+        get_season('tt6468322'))
