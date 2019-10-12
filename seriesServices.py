@@ -254,8 +254,31 @@ def search(name):
     return final_results if final_results else None
 
 
+def get_season(imdb_id: str):
+    url = f"https://www.imdb.com/title/{imdb_id}/episodes?season=1"
+    content = get_content(url)
+    if not content:
+        return
+    tree =  fromstring(content)
+    season = tree.xpath('//*[@id="bySeason"]/option[last()]/text()')
+    try:
+        season = int(season[0].strip())
+    except Exception:
+        return
+    return get_confirmed_season(imdb_id, season)
+
+def get_confirmed_season(imdb_id, season):
+    url = f"https://www.imdb.com/title/{imdb_id}/episodes?season={season}"
+    content = get_content(url)
+    if not content:
+        return
+    tree =  fromstring(content)
+    dates = [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
+    pprint(dates)
+
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
     # pprint(search('robocop')[0].__dict__)
     # pprint(getSeriesSingle('bigbang'))
-    updateAll()
+    get_season('tt4158110')
+    get_season('tt1043813')
