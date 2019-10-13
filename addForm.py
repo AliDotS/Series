@@ -16,7 +16,7 @@ def is_url(url):
 
 
 class Ui_MainWindow(object):
-    imdb_url = ''
+    imdb_id = ''
     adding = True
     oldName = ''
 
@@ -167,8 +167,8 @@ class Ui_MainWindow(object):
         self.sUI.set_imdb = self.set_imdb_url
         self.sMain.show()
 
-    def set_imdb_url(self, url: str):
-        self.imdbLineEdit.setText(url)
+    def set_imdb_url(self, imdb_id: str):
+        self.imdbLineEdit.setText(imdb_id)
 
     def validate_form(self):
         directory = self.directoryLineEdit.text()
