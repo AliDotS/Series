@@ -228,7 +228,7 @@ def get_content(url: str):
 class imdb_search_result():
     img = ''
     name = ''
-    imdb_link = ''
+    imdb_id = ''
 
 # TODO: url and test not complete
 
@@ -236,7 +236,6 @@ class imdb_search_result():
 def search(name):
     if not name or name == "":
         return
-    site = 'https://www.imdb.com'
     baseUrl = 'https://www.imdb.com/find?s=all&ref_=fn_al_tt_mr&q='
     tree = fromstring(get_content(baseUrl + name))
     # results = tree.xpath('//tr[contains(@class, "findResult")]')
@@ -248,9 +247,9 @@ def search(name):
         details.name = result.xpath(
             './/td[@class = "result_text"]/a/text()')[0]
         details.name += result.xpath('.//td[@class = "result_text"]/text()')[1]
-        details.imdb_link = result.xpath(
+        details.imdb_id = result.xpath(
             './/td[@class = "result_text"]/a/@href')[0]
-        details.imdb_link = site + details.imdb_link
+        details.imdb_id = re.search(r'(?<=title/)tt\d+(?=/)', details.imdb_id).group()
         final_results.append(deepcopy(details))
     return final_results if final_results else None
 
@@ -301,7 +300,7 @@ def get_dates(imdb_id, season):
 
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
-    # pprint(search('robocop')[0].__dict__)
+    pprint(search('robocop')[0].__dict__)
     # pprint(getSeriesSingle('bigbang'))
-    print(get_season('tt4158110'),\
-        get_season('tt6468322'))
+    # print(get_season('tt4158110'),\
+    #     get_season('tt6468322'))
