@@ -75,6 +75,8 @@ class Ui_MainWindow(object):
 
     def search_name(self):
         self.searchPushButton.setEnabled(False)
+        self.searchPushButton.setText('searching...')
+        QtWidgets.QApplication.processEvents()
         self.clear_results()
         print(f'getting {self.nameLineEdit.text()}')
         results = seriesServices.search(self.nameLineEdit.text())
@@ -89,6 +91,7 @@ class Ui_MainWindow(object):
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
         self.searchPushButton.setEnabled(True)
+        self.searchPushButton.setText('&Search')
 
     def downloadfile(self, label, link, retry=0):
         req = Request(link, headers={'User-Agent': 'Mozilla/5.0'})
