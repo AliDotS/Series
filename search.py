@@ -20,9 +20,9 @@ class myLabel(QtWidgets.QLabel):
         self.setStyleSheet("background-color : transparent")
 
     def on_clicked(self, event):
-        self.parent().imdb_link = self.imdb_link
-        print(self.parent().imdb_link)
-        self.set_imdb(self.imdb_link)
+        self.parent().imdb_id = self.imdb_id
+        print(self.parent().imdb_id)
+        self.set_imdb(self.imdb_id)
         self.parent().on_close()
 
 
@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
             image.setScaledContents(True)
             self.downloadfile(image, result.img)
             name = myLabel(result.name)
-            name.imdb_link = result.imdb_link
+            name.imdb_id = result.imdb_id
             name.set_imdb = self.set_imdb
             self.groupLayout.addRow(image, name)
             QtWidgets.QApplication.processEvents()
