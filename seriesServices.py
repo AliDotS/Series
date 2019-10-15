@@ -20,7 +20,9 @@ def updateAll():
 
     failed = False
     for tvSeries in getSeries():
-        url = tvSeries['imdbUrl']
+        imdbId = tvSeries['imdbId']
+        season = tvSeries['season']
+        url = f"https://www.imdb.com/title/{imdbId}/episodes?season={season}"
         content = get_content(url)
         if content is None:
             failed = True
@@ -46,11 +48,14 @@ def updateAll():
         return False
     return True
 
+#TODO: fix extra find_one
 def getData(name: str):
     if not series.find_one({'name': name}):
         return False
 
-    url = series.find_one({'name': name})['imdbUrl']
+    imdbId = series.find_one({'name': name})['imdbId']
+    season = series.find_one({'name': name})['season']
+    url = f"https://www.imdb.com/title/{imdbId}/episodes?season={season}"
 
     content = get_content(url)
     if content is None:
@@ -127,7 +132,7 @@ def setPhoto(name: str, image: str):
     },
         {
             '$set': {
-                'image': image
+                'photo': image
             }
     })
 
@@ -161,9 +166,9 @@ def checkOut(name: str):
 
     episode = '%02i' % num
 
-    season = re.findall("(?<=_)[0-9]+$", tvSeries['imdbUrl'])[0]
+    season = tvSeries['season']
 
-    prog = re.compile(fr"http[^\ ]*[sS]{season}[^\ ]*[eE]{episode}[^\ ]*mkv")
+    prog = re.compile(fr"http[^\ ]*[sS]{season:02}[^\ ]*[eE]{episode}[^\ ]*mkv")
 
     for url in tvSeries['urls']:
         page = get_content(url)
@@ -184,7 +189,7 @@ def getSeries():
         if episode is None and tvSeries['atStart']:
             episode = 1
 
-        season = re.findall("(?<=_)[0-9]+$", tvSeries['imdbUrl'])[0]
+        season = tvSeries['season']
 
         item = {
             'episode': str(episode),

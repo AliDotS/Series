@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
                 self.seriesTableWidget.setItem(
                     position, 0, QtWidgets.QTableWidgetItem(series['name']))
                 self.seriesTableWidget.setItem(
-                    position, 1, QtWidgets.QTableWidgetItem(series['season']))
+                    position, 1, QtWidgets.QTableWidgetItem(str(series['season'])))
                 self.seriesTableWidget.setItem(
                     position, 2, QtWidgets.QTableWidgetItem(series['episode']))
         except Exception:
@@ -152,7 +152,7 @@ class Ui_MainWindow(object):
         self.eUI.setupUi(self.eMain)
         self.eUI.adding = False
         self.eUI.setup_edit(data['name'], data['directory'],
-                            data['imdbUrl'], data['photo'], data['urls'])
+                            data['imdbId'], data['photo'], data['urls'])
         self.eMain.show()
 
     def on_edit(self):
