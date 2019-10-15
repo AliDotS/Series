@@ -174,7 +174,7 @@ class Ui_MainWindow(object):
         directory = self.directoryLineEdit.text()
         photo = self.photoPathLineEdit.text()
         name = self.nameLineEdit.text()
-        imdb_url = self.imdbLineEdit.text()
+        imdb_id = self.imdbLineEdit.text()
         urls = []
         for row in range(self.urlsTableWidget.rowCount() - 1):
             urls.append(self.urlsTableWidget.item(row, 0).text())
@@ -186,21 +186,14 @@ class Ui_MainWindow(object):
             error += "Unvalid photo\n"
         if not name or name == "":
             error += "Unvalid name\n"
-        if not is_url(imdb_url) or\
-                not reSearch("^(http[s]?://)?(www.)?imdb.com", imdb_url):
-            error += "Unvalid imdb url\n"
+        if not reSearch(r'tt\d+', imdb_id):
+            error += "Unvalid imdb id\n"
         for index, url in enumerate(urls):
             if not is_url(url):
                 error += f"Unvalid url {index + 1}\n"
         if error:
             print(error)
             return False
-        return True
-
-    def validate_urls(self):
-        for url in range(self.urlsTableWidget.rowCount() - 1):
-            if not is_url(url):
-                return False
         return True
 
     def create_series(self):
