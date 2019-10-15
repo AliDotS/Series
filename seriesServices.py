@@ -73,7 +73,7 @@ def getData(name: str):
     return True
 
 
-def createSeries(name: str, url: str, directory: str, urls: [str], photo=''):
+def createSeries(name: str, imdbId: str, season: int, directory: str, urls: [str], photo=''):
     if series.find_one({'name': name}):
         return 0
 
@@ -82,7 +82,8 @@ def createSeries(name: str, url: str, directory: str, urls: [str], photo=''):
 
     new_series = {
         'name': name,
-        'imdbUrl': url,
+        'imdbId': imdbId,
+        'season': season,
         'directory': directory,
         'photo': photo,
         'urls': urls,
