@@ -310,9 +310,30 @@ def get_dates(imdb_id, season):
     return [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
 
 
+def check_date(name: str):
+    tvSeries = series.find_one({'name': name})
+    if not tvSeries or not tvSeries.get('dates'):
+        return
+    now = datetime.now().date()
+    episode = get_last_file(tvSeries['directory'])
+    if episode is None:
+        return
+    date = tvSeries['dates'][episode - 1]
+    try:
+        if '.' in date:
+            date = datetime.strptime(date, '%d %b. %y').date()
+        else:
+            date = datetime.strptime(date, '%d %b %Y').date()
+    except Exception:
+        return
+    return (now - date).days
+
+
+
 if __name__ == "__main__":
     # print(get_last_file('/media/matrix/ECC6C7AEC6C776FC/Videos/Arrow/Season 07/'))
-    pprint(search('robocop')[0].__dict__)
+    # pprint(search('robocop')[0].__dict__)
     # pprint(getSeriesSingle('bigbang'))
     # print(get_season('tt4158110'),\
     #     get_season('tt6468322'))
+    print(check_date('bigbang'))
