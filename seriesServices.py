@@ -48,13 +48,15 @@ def updateAll():
         return False
     return True
 
-#TODO: fix extra find_one
 def getData(name: str):
     if not series.find_one({'name': name}):
         return False
 
-    imdbId = series.find_one({'name': name})['imdbId']
-    season = series.find_one({'name': name})['season']
+    tvSeries = series.find_one({'name': name})
+    if not tvSeries:
+        return False
+    imdbId = tvSeries['imdbId']
+    season = tvSeries['season']
     url = f"https://www.imdb.com/title/{imdbId}/episodes?season={season}"
 
     content = get_content(url)
