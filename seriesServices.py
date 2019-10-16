@@ -29,7 +29,8 @@ def updateAll():
             continue
 
         tree = html.fromstring(content)
-        dates = [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
+        dates = [e.strip() for e in tree.xpath(
+            '//div[@class="airdate"]/text()')]
         names = tree.xpath('//a[@itemprop="name"]/text()')
         result = series.update_one({
             'name': tvSeries['name']
@@ -48,10 +49,8 @@ def updateAll():
         return False
     return True
 
-def getData(name: str):
-    if not series.find_one({'name': name}):
-        return False
 
+def getData(name: str):
     tvSeries = series.find_one({'name': name})
     if not tvSeries:
         return False
@@ -94,7 +93,7 @@ def createSeries(name: str, imdbId: str, season: int, directory: str, urls: [str
         'directory': directory,
         'photo': photo,
         'urls': urls,
-        'atStart' : False
+        'atStart': False
     }
     episode = get_last_file(directory)
     if episode is None:
@@ -111,12 +110,14 @@ def updateSeries(oldName: str, newName: str, url: str, directory: str, photo: st
     result = series.update_one({
         'name': oldName
     }, {
-        'name': newName,
-        'imdbUrl': url,
-        'directory': directory,
-        'photo': photo,
-        'urls': urls,
-        'atStart' : True
+        '$set': {
+            'name': newName,
+            'imdbUrl': url,
+            'directory': directory,
+            'photo': photo,
+            'urls': urls,
+            'atStart': True
+        }
     })
 
     if result.acknowledged:
@@ -158,11 +159,11 @@ def checkOut(name: str):
             return
     elif tvSeries['atStart']:
         series.update_one({
-            "name" : tvSeries['name']
+            "name": tvSeries['name']
         },
-        {
+            {
             '$set': {
-                'atStart' : False
+                'atStart': False
             }
         })
 
@@ -170,7 +171,8 @@ def checkOut(name: str):
 
     season = tvSeries['season']
 
-    prog = re.compile(fr"http[^\ ]*[sS]{season:02}[^\ ]*[eE]{episode}[^\ ]*mkv")
+    prog = re.compile(
+        fr"http[^\ ]*[sS]{season:02}[^\ ]*[eE]{episode}[^\ ]*mkv")
 
     for url in tvSeries['urls']:
         page = get_content(url)
@@ -257,7 +259,8 @@ def search(name):
         details.name += result.xpath('.//td[@class = "result_text"]/text()')[1]
         details.imdb_id = result.xpath(
             './/td[@class = "result_text"]/a/@href')[0]
-        details.imdb_id = re.search(r'(?<=title/)tt\d+(?=/)', details.imdb_id).group()
+        details.imdb_id = re.search(
+            r'(?<=title/)tt\d+(?=/)', details.imdb_id).group()
         final_results.append(deepcopy(details))
     return final_results if final_results else None
 
@@ -267,13 +270,14 @@ def get_season(imdb_id: str):
     content = get_content(url)
     if not content:
         return
-    tree =  fromstring(content)
+    tree = fromstring(content)
     season = tree.xpath('//*[@id="bySeason"]/option[last()]/text()')
     try:
         season = int(season[0].strip())
     except Exception:
         return
     return get_confirmed_season(imdb_id, season)
+
 
 def get_confirmed_season(imdb_id, season):
     dates = {}
@@ -302,7 +306,7 @@ def get_dates(imdb_id, season):
     content = get_content(url)
     if not content:
         return
-    tree =  fromstring(content)
+    tree = fromstring(content)
     return [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
 
 
