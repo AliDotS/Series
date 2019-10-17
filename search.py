@@ -21,14 +21,13 @@ class myLabel(QtWidgets.QLabel):
 
     def on_clicked(self, event):
         self.parent().imdb_id = self.imdb_id
-        print(self.parent().imdb_id)
         self.set_imdb(self.imdb_id)
         self.parent().on_close()
 
 
 class Ui_MainWindow(object):
     rownum = 0
-    imdb_link = ''
+    imdb_id = ''
     perName = ''
     set_imdb = None
     def setupUi(self, MainWindow):
@@ -118,8 +117,13 @@ class Ui_MainWindow(object):
             self.groupLayout.itemAt(index).widget().setParent(None)
 
     def on_close(self):
+        self.centralwidget.parent().hide()
+        print(seriesServices.get_season(self.groupBox.imdb_id))
         self.centralwidget.parent().close()
 
+    def closeEvent(self, *args, **kwargs):
+        super(QtGui.QMainWindow, self).closeEvent(*args, **kwargs)
+        print('closing')
 
 if __name__ == "__main__":
     import sys
