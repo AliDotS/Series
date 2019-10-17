@@ -175,7 +175,8 @@ class Ui_MainWindow(object):
         self.sUI.set_imdb = self.set_imdb_url
         self.sMain.show()
 
-    def set_imdb_url(self, imdb_id: str):
+    def set_imdb_url(self, imdb_id: str, season: int):
+        self.seasonSpinBox.setValue(season)
         self.imdbLineEdit.setText(imdb_id)
 
     def validate_form(self):
@@ -241,5 +242,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    ui.setup_edit('test', 'testd', 'testi', 'testp', ['hello1', 'hello2'])
+    ui.setup_edit('titans', 'testd', 'testi', 'testp', ['hello1', 'hello2'])
     sys.exit(app.exec_())
