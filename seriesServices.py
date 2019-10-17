@@ -310,18 +310,11 @@ def get_dates(imdb_id, season):
     return [e.strip() for e in tree.xpath('//div[@class="airdate"]/text()')]
 
 
-def check_date(name: str):
-    tvSeries = series.find_one({'name': name})
-    if not tvSeries or not tvSeries.get('dates'):
-        return
+def check_date(date: str):
     now = datetime.now().date()
-    episode = get_last_file(tvSeries['directory'])
-    if episode is None:
-        return
-    date = tvSeries['dates'][episode - 1]
     try:
         if '.' in date:
-            date = datetime.strptime(date, '%d %b. %y').date()
+            date = datetime.strptime(date, '%d %b. %Y').date()
         else:
             date = datetime.strptime(date, '%d %b %Y').date()
     except Exception:
@@ -336,4 +329,4 @@ if __name__ == "__main__":
     # pprint(getSeriesSingle('bigbang'))
     # print(get_season('tt4158110'),\
     #     get_season('tt6468322'))
-    print(check_date('bigbang'))
+    print(check_date('9 Oct. 2019'))
