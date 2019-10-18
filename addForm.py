@@ -208,13 +208,14 @@ class Ui_MainWindow(object):
     def create_series(self):
         name = self.nameLineEdit.text()
         directory = self.directoryLineEdit.text()
-        imdb_url = self.imdbLineEdit.text()
+        imdb_id = self.imdbLineEdit.text()
+        season = self.seasonSpinBox.value()
         photo = self.photoPathLineEdit.text()
         urls = []
         for row in range(self.urlsTableWidget.rowCount() - 1):
             urls.append(self.urlsTableWidget.item(row, 0).text())
 
-        seriesServices.createSeries(name, imdb_url, directory, urls, photo)
+        seriesServices.createSeries(name, imdb_id, season, directory, urls, photo)
         self.centralwidget.parent().close()
 
     def setup_edit(self, name, directory, imdb_url, photo, urls):
