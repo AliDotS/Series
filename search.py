@@ -21,7 +21,6 @@ class myLabel(QtWidgets.QLabel):
 
     def on_clicked(self, event):
         self.parent().imdb_id = self.imdb_id
-        self.set_imdb(self.imdb_id)
         self.parent().on_close()
 
 
@@ -120,10 +119,6 @@ class Ui_MainWindow(object):
         self.centralwidget.parent().hide()
         print(seriesServices.get_season(self.groupBox.imdb_id))
         self.centralwidget.parent().close()
-
-    def closeEvent(self, *args, **kwargs):
-        super(QtGui.QMainWindow, self).closeEvent(*args, **kwargs)
-        print('closing')
 
 if __name__ == "__main__":
     import sys
