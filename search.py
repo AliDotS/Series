@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     rownum = 0
     imdb_id = ''
     perName = ''
-    set_imdb = None
+    set_imdb = lambda x: x
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 361)
@@ -117,7 +117,7 @@ class Ui_MainWindow(object):
 
     def on_close(self):
         self.centralwidget.parent().hide()
-        print(seriesServices.get_season(self.groupBox.imdb_id))
+        self.set_imdb(self.groupBox.imdb_id, seriesServices.get_season(self.groupBox.imdb_id))
         self.centralwidget.parent().close()
 
 if __name__ == "__main__":
