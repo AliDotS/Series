@@ -151,7 +151,7 @@ class Ui_MainWindow(object):
                 self.create_series()
             else:
                 urls = []
-                for num in range(self.urlsTableWidget.rowCount()):
+                for num in range(self.urlsTableWidget.rowCount() - 1):
                     urls.append(self.urlsTableWidget.item(num, 0).text())
                 seriesServices.updateSeries(self.oldName, self.nameLineEdit.text(), self.imdbLineEdit.text(
                 ), self.seasonSpinBox.value(), self.directoryLineEdit.text(), self.photoPathLineEdit.text(), urls)
