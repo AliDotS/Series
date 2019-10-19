@@ -218,11 +218,12 @@ class Ui_MainWindow(object):
         seriesServices.createSeries(name, imdb_id, season, directory, urls, photo)
         self.centralwidget.parent().close()
 
-    def setup_edit(self, name, directory, imdb_url, photo, urls):
+    def setup_edit(self, name, directory, imdb_id, season, photo, urls):
         self.nameLineEdit.setText(name)
         self.oldName = name
         self.directoryLineEdit.setText(directory)
-        self.imdbLineEdit.setText(imdb_url)
+        self.imdbLineEdit.setText(imdb_id)
+        self.seasonSpinBox.setValue(season)
         if photo:
             self.photoPathLineEdit.setText(photo)
             self.addPushButton.setEnabled(True)
