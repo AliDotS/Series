@@ -155,6 +155,7 @@ class Ui_MainWindow(object):
                     urls.append(self.urlsTableWidget.item(num, 0).text())
                 seriesServices.updateSeries(self.oldName, self.nameLineEdit.text(), self.imdbLineEdit.text(
                 ), self.seasonSpinBox.value(), self.directoryLineEdit.text(), self.photoPathLineEdit.text(), urls)
+        self.centralwidget.parent().close()
 
     def on_directory(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory()
