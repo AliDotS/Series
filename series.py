@@ -14,10 +14,12 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.seriesTableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.seriesTableWidget.setGeometry(QtCore.QRect(0, 0, 515, 411))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.seriesTableWidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.seriesTableWidget.sizePolicy().hasHeightForWidth())
         self.seriesTableWidget.setSizePolicy(sizePolicy)
         self.seriesTableWidget.setObjectName("seriesTableWidget")
         self.seriesTableWidget.setColumnCount(5)
@@ -152,7 +154,7 @@ class Ui_MainWindow(object):
         self.eUI.setupUi(self.eMain)
         self.eUI.adding = False
         self.eUI.setup_edit(data['name'], data['directory'],
-                            data['imdbId'], data['photo'], data['urls'])
+                            data['imdbId'], data['season'], data['photo'], data['urls'])
         self.eMain.show()
 
     def on_edit(self):
@@ -169,7 +171,7 @@ class Ui_MainWindow(object):
     def on_update(self):
         if self.status:
             return
-        self.status =  'updating'
+        self.status = 'updating'
         self.updatePushButton.setText('updating...')
         self.updatePushButton.setEnabled(False)
         Qt.QApplication.processEvents()
